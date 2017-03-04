@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """weborder URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,6 +19,15 @@ from django.conf.urls import url
 from django.contrib import admin
 import xadmin
 
+from users.views import LoginView, IndexView
+
 urlpatterns = [
+    # 网站后台
     url(r'^xadmin/', xadmin.site.urls),
+
+    # 用户登录
+    url(r'^login/$', LoginView.as_view(), name="login"),
+
+    # 首页
+    url(r'^$', IndexView.as_view(), name="index"),
 ]
