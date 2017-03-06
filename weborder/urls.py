@@ -19,11 +19,14 @@ from django.conf.urls import url
 from django.contrib import admin
 import xadmin
 
-from users.views import LoginView, IndexView
+from users.views import LoginView, IndexView, RegisterView
 
 urlpatterns = [
     # 网站后台
     url(r'^xadmin/', xadmin.site.urls),
+
+    # 用户注册
+    url(r'register/$', RegisterView.as_view(), name="register"),
 
     # 用户登录
     url(r'^login/$', LoginView.as_view(), name="login"),
