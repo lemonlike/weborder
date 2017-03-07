@@ -19,7 +19,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 import xadmin
 
-from users.views import LoginView, IndexView, RegisterView
+from users.views import LoginView, IndexView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
 
 urlpatterns = [
     # 网站后台
@@ -35,5 +35,17 @@ urlpatterns = [
     url(r'^$', IndexView.as_view(), name="index"),
 
     # 验证码
-    url(r'captcha/', include('captcha.urls')),
+    url(r'^captcha/', include('captcha.urls')),
+
+    # 激活用户
+    url(r'^active/(?P<active_code>.*)/$', ActiveUserView.as_view(), name="user_active"),
+
+    # 忘记密码
+    url(r'^forget/$', ForgetPwdView.as_view(), name="forget_pwd"),
+
+    # 打开重置密码页面
+    url(r'^reset/(?P<reset_code>.*)/$', ResetPwdView.as_view(), name="reset_pwd"),
+
+    # 重置密码
+    url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
 ]
