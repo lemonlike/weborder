@@ -2,8 +2,15 @@
 __author__ = 'lemon'
 
 from django import forms
+from captcha.fields import CaptchaField
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
-    password = forms.CharField(required=True, min_length=5, error_messages={"invalid": u"密码长度至少为5个字符"})
+    password = forms.CharField(required=True, min_length=5)
+
+
+class RegisterForm(forms.Form):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(required=True, min_length=5)
+    captcha = CaptchaField()
