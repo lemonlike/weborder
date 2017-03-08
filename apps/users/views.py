@@ -108,6 +108,15 @@ class LoginView(View):
             return render(request, "login.html", {"login_form": login_form})
 
 
+class LogoutView(View):
+    """
+    用户登出
+    """
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))
+
+
 class IndexView(View):
     """
     首页

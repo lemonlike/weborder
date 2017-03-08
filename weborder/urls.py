@@ -20,6 +20,7 @@ from django.contrib import admin
 import xadmin
 
 from users.views import LoginView, IndexView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
+from users.views import LogoutView
 
 urlpatterns = [
     # 网站后台
@@ -30,6 +31,9 @@ urlpatterns = [
 
     # 用户登录
     url(r'^login/$', LoginView.as_view(), name="login"),
+
+    # 用户登出
+    url(r'^logout/$', LogoutView.as_view(), name="logout"),
 
     # 首页
     url(r'^$', IndexView.as_view(), name="index"),
@@ -48,4 +52,7 @@ urlpatterns = [
 
     # 重置密码
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
+
+    # 富文本相关url
+    url(r'^ueditor/',include('DjangoUeditor.urls' )),
 ]
