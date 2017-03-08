@@ -28,7 +28,7 @@ PLUGINS = (
     'language', 
     'quickfilter',
     'sortablelist',
-    'ueditor',
+    'ueditor'
 )
 
 

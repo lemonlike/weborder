@@ -18,9 +18,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 import xadmin
+from django.views.static import serve
 
 from users.views import LoginView, IndexView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
 from users.views import LogoutView
+from .settings import MEDIA_ROOT
 
 urlpatterns = [
     # 网站后台
@@ -53,6 +55,12 @@ urlpatterns = [
     # 重置密码
     url(r'^modify_pwd/$', ModifyPwdView.as_view(), name="modify_pwd"),
 
+    # 配置处理上传文件的访问处理函数
+    url(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
+
     # 富文本相关url
-    url(r'^ueditor/',include('DjangoUeditor.urls' )),
+    url(r'^ueditor/',include('DjangoUeditor.urls')),
+
+    # 菜单相关url配置
+    url(r'^food/', include('foods.urls', namespace="food")),
 ]

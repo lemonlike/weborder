@@ -10,6 +10,7 @@ class FoodAdmin(object):
     list_display = ['name', 'price', 'category', 'taste', 'buy_nums', 'fav_nums', 'add_time']
     search_fields = ['name', 'price', 'category', 'taste', 'detail', 'buy_nums', 'fav_nums']
     list_filter = ['name', 'price', 'category', 'taste', 'detail', 'buy_nums', 'fav_nums', 'add_time']
+    style_fields = {"detail": "ueditor"}
 
 
 class OrderAdmin(object):
