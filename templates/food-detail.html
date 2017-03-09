@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}菜品详情 - 在线点餐网{% endblock %}
+
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'food:food_list' %}">菜单列表</a>></li>
+                <li>菜品详情</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section>
+        <div class="wp">
+            <div class="groupPurchase_detail detail">
+                <div class="toppro">
+                    <div class="left">
+                        <div class="picbox">
+                            <div class="tb-booth tb-pic">
+                                <img width="440" height="445"
+                                     src="{{ MEDIA_URL }}{{ food.image }}"
+                                     class="jqzoom"/>
+                            </div>
+
+                        </div>
+                        <div class="des">
+                            <h1>{{ food.name }}</h1>
+                            <span class="key">此处暂时省略</span>
+                            <div class="prize">
+                                <span class="fl">价格：<i class="key">{{ food.price }}<i style="font-size: 16px">元</i></i></span>
+                                <span class="fr">下单数：{{ food.buy_nums }}</span>
+                            </div>
+                            <ul class="parameter">
+                                <li><span
+                                        class="pram word3">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
+                                </li>
+                                <li><span
+                                        class="pram word3">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
+                                </li>
+                                <li><span
+                                        class="pram word3">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
+                                </li>
+
+                                <li><span class="pram word3">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span title="">{{ food.get_category_display }}</span>
+                                </li>
+                                <li class="piclist"><span class="pram word4">下单用户：</span>
+                                        <span class="pic"><img width="40" height="40"
+                                                               src=""/></span>
+                                </li>
+                            </ul>
+                            <div class="btns">
+                                <div class="btn colectgroupbtn" id="jsLeftBtn">
+                                    {% if has_fav_food %}已收藏{% else %}收藏{% endif %}
+                                </div>
+                                <div class="buy btn"><a style="color: white" href="">加入购物车</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="wp">
+            <div class="list groupPurchase_detail_pro">
+                <div class="left layout">
+                    <div class="head">
+                        <ul class="tab_header">
+                            <li class="active">本菜详情</li>
+                        </ul>
+                    </div>
+                    <div class="tab_cont tab_cont1">
+                        {% autoescape off %}
+                            {{ food.detail }}
+                        {% endautoescape %}
+                    </div>
+                    <div class="tab_cont tab_cont2">
+                        <div class="comment">
+                            <div class="comenlist">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right layout">
+                    <div class="head">相关菜品推荐</div>
+                    <div class="group_recommend">
+                        {% for relate_food in relate_foods %}
+
+                            <dl>
+                                <dt>
+                                    <a target="_blank" href="{% url 'food:food_detail' relate_food.id %}">
+                                        <img width="240" height="220" class="scrollLoading"
+                                             src="{{ MEDIA_URL }}{{ relate_food.image }}"/>
+                                    </a>
+                                </dt>
+                                <dd>
+                                    <a target="_blank" href="{% url 'food:food_detail' relate_food.id %}">
+                                        <h2>{{ relate_food.name }}</h2></a>
+                                    <span class="fl">价格：<i class="key">{{ relate_food.price }}</i></span>
+                                </dd>
+                            </dl>
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% block custom_js %}
+        <script type="text/javascript">
+            //收藏分享
+            function add_fav(current_elem, user_id, food_id) {
+                $.ajax({
+                    cache: false,
+                    type: "POST",
+                    url: "{% url 'food:add_fav' %}",
+                    data: {'user_id': user_id, 'food_id': food_id},
+                    async: true,
+                    beforeSend: function (xhr, settings) {
+                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                    },
+                    success: function (data) {
+                        if (data.status == 'fail') {
+                            if (data.msg == '用户未登录') {
+                                window.location.href = "/login/";
+                            } else {
+                                alert(data.msg)
+                            }
+
+                        } else if (data.status == 'success') {
+                            current_elem.text(data.msg)
+                        }
+                    }
+                });
+            }
+
+            $('#jsLeftBtn').on('click', function () {
+                add_fav($(this), {{ request.user.id }}, {{ food.id }});
+            });
+
+        </script>
+    {% endblock %}
+
+{% endblock %}
+

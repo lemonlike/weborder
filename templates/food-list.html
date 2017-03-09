@@ -43,12 +43,12 @@
                             <div class="group_list">
                                 {% for food in all_foods.object_list %}
                                     <div class="box">
-                                        <a href="">
+                                        <a href="{% url 'food:food_detail' food.id %}">
                                             <img width="280" height="350" class="scrollLoading"
                                                  src="{{ MEDIA_URL }}{{ food.image }}"/>
                                         </a>
                                         <div class="des">
-                                            <a href="">
+                                            <a href="{% url 'food:food_detail' food.id %}">
                                                 <h2>{{ food.name }}</h2>
                                             </a>
                                             <span class="fl">价格：<i class="key">{{ food.price }}<i
