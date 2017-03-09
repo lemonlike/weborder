@@ -16,15 +16,29 @@ class FoodListView(View):
         # 热门菜 按下单数排序
         hot_foods = Food.objects.all().order_by("-buy_nums")[:3]
 
+        # 按菜的类别进行筛选
+        category = request.GET.get('ct', '')
+        if category:
+            all_foods = all_foods.filter(category=category)
+
+        # 按下单数或收藏数排序
+        sort = request.GET.get('sort', '')
+        if sort == "order":
+            all_foods = all_foods.order_by("-buy_nums")
+        elif sort == "fav":
+            all_foods = all_foods.order_by("-fav_nums")
+
         # 对菜单进行分页
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_foods, 3, request=request)
+        p = Paginator(all_foods, 6, request=request)
         foods = p.page(page)
         return render(request, "food-list.html", {
             "all_foods": foods,
             "hot_foods": hot_foods,
+            "category": category,
+            "sort": sort,
         })

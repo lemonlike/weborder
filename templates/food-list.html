@@ -21,9 +21,20 @@
                 <div class="left layout">
                     <div class="head">
                         <ul class="tab_header">
-                            <li class="{% if sort == '' %}active{% endif %}"><a href="?sort=">最新 </a></li>
-                            <li class="{% if sort == 'hot' %}active{% endif %}"><a href="?sort=hot">最热门</a></li>
-                            <li class="{% if sort == 'students' %}active{% endif %}"><a href="?sort=students">参与人数</a>
+                            <li class="{% if category == '' %}active{% endif %}"><a href="?ct=&sort={{ sort }}">全部</a></li>
+                            <li class="{% if category == 'rh' %}active{% endif %}"><a href="?ct=rh&sort={{ sort }}">热荤</a></li>
+                            <li class="{% if category == 'rs' %}active{% endif %}"><a href="?ct=rs&sort={{ sort }}">热素</a></li>
+                            <li class="{% if category == 'lc' %}active{% endif %}"><a href="?ct=lc&sort={{ sort }}">凉菜</a>
+                            </li>
+                            <li class="{% if category == 'td' %}active{% endif %}"><a href="?ct=td&sort={{ sort }}">甜点</a></li>
+                            <li class="{% if category == 'zs' %}active{% endif %}"><a href="?ct=zs&sort={{ sort }}">主食</a></li>
+                            <li class="{% if category == 'js' %}active{% endif %}"><a href="?ct=js&sort={{ sort }}">酒水</a>
+                            </li>
+                        </ul>
+                        <ul class="tab_header">
+                            <li class="{% if sort == '' %}active{% endif %}"><a href="?ct={{ category }}&sort=">最新 </a></li>
+                            <li class="{% if sort == 'order' %}active{% endif %}"><a href="?ct={{ category }}&sort=order">下单最多 ↓</a></li>
+                            <li class="{% if sort == 'fav' %}active{% endif %}"><a href="?ct={{ category }}&sort=fav">收藏最多 ↓</a>
                             </li>
                         </ul>
                     </div>
@@ -40,7 +51,8 @@
                                             <a href="">
                                                 <h2>{{ food.name }}</h2>
                                             </a>
-                                            <span class="fl">价格：<i class="key">{{ food.price }}<i style="font-size: 16px">元</i></i></span>
+                                            <span class="fl">价格：<i class="key">{{ food.price }}<i
+                                                    style="font-size: 16px">元</i></i></span>
                                             <span class="fr">下单数：{{ food.buy_nums }}</span>
                                         </div>
                                         <div class="bottom">
@@ -102,7 +114,8 @@
                                 </dt>
                                 <dd>
                                     <a target="_blank" href=""><h2>{{ hot_food.name }}</h2></a>
-                                    <span class="fl">价格：<i class="key">{{ hot_food.price }}<i style="font-size: 14px">元</i></i></span>
+                                    <span class="fl">价格：<i class="key">{{ hot_food.price }}<i
+                                            style="font-size: 14px">元</i></i></span>
                                 </dd>
                             </dl>
 
