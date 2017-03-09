@@ -14,7 +14,7 @@ class FoodListView(View):
         all_foods = Food.objects.all().order_by("-add_time")
 
         # 热门菜 按下单数排序
-        hot_foods = Food.objects.all().order_by("-buy_nums")
+        hot_foods = Food.objects.all().order_by("-buy_nums")[:3]
 
         # 对菜单进行分页
         try:
@@ -22,7 +22,7 @@ class FoodListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_foods, 6, request=request)
+        p = Paginator(all_foods, 3, request=request)
         foods = p.page(page)
         return render(request, "food-list.html", {
             "all_foods": foods,
