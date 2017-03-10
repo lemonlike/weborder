@@ -15,7 +15,8 @@ from utils.mixin_utils import LoginRequiredMixin
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UserInfoForm, ImageUploadForm
 from operation.models import UserMessage, UserFavorite
 from utils.email_send import send_email
-from .models import EmailVerifyRecord
+from .models import EmailVerifyRecord, Banner
+from foods.models import Food
 
 
 class CustomBackend(ModelBackend):
@@ -121,7 +122,15 @@ class IndexView(View):
     首页
     """
     def get(self, request):
-        return render(request, "index.html", {})
+        all_banners = Banner.objects.all().order_by("index")
+        foods = Food.objects.all().order_by("-fav_nums")[:6]
+        banner_foods = Food.objects.all().order_by("-buy_nums")[:3]
+
+        return render(request, "index.html", {
+            "all_banners":all_banners,
+            "foods": foods,
+            "banner_foods": banner_foods
+        })
 
 
 class ForgetPwdView(View):
@@ -289,5 +298,15 @@ class MyMessageView(LoginRequiredMixin, View):
         p = Paginator(user_messages, 5, request=request)
         messages = p.page(page)
         return render(request, "usercenter-message.html", {
-            "messages": messages
+            "all_messages": messages
         })
+
+
+class UserFoodView(LoginRequiredMixin, View):
+    """
+    点过的菜
+    """
+    def get(self, request):
+        return render(request, "usercenter-userfood.html")
+
+
