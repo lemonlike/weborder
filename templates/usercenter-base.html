@@ -93,7 +93,7 @@
         <ul>
             <li class="active2"><a href="{% url 'users:user_info' %}">个人资料</a></li>
             <li ><a href="">点过的菜</a></li>
-            <li ><a href="">我的收藏</a></li>
+            <li ><a href="{% url 'users:fav_food' %}">我的收藏</a></li>
             <li ><a href="" style="position: relative;">我的消息</a></li>
         </ul>
 	</div>
@@ -259,14 +259,14 @@
 <script type="text/javascript">
     $('.jsDeleteFav_course').on('click', function(){
         var _this = $(this),
-            favid = _this.attr('data-favid');
+            fav_food_id = _this.attr('data-fav_food_id');
         $.ajax({
                 cache: false,
                 type: "POST",
                 url: "{% url "food:add_fav" %}",
                 data: {
-                    fav_type: 1,
-                    fav_id: favid,
+                    user_id: {{ request.user.id }},
+                    food_id: fav_food_id,
                     csrfmiddlewaretoken: '{{ csrf_token }}'
                 },
                 async: true,
@@ -276,44 +276,6 @@
             });
     });
 
-    $('.jsDeleteFav_teacher').on('click', function(){
-            var _this = $(this),
-                favid = _this.attr('data-favid');
-            $.ajax({
-                    cache: false,
-                    type: "POST",
-                    url: "{% url "food:add_fav" %}",
-                    data: {
-                        fav_type: 3,
-                        fav_id: favid,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    async: true,
-                    success: function(data) {
-                        Dml.fun.winReload();
-                    }
-                });
-        });
-
-
-    $('.jsDeleteFav_org').on('click', function(){
-            var _this = $(this),
-                favid = _this.attr('data-favid');
-            $.ajax({
-                    cache: false,
-                    type: "POST",
-                    url: "{% url "food:add_fav" %}",
-                    data: {
-                        fav_type: 2,
-                        fav_id: favid,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    async: true,
-                    success: function(data) {
-                        Dml.fun.winReload();
-                    }
-                });
-        });
 </script>
 
 

@@ -4,7 +4,7 @@ __author__ = 'lemon'
 from django.conf.urls import url
 
 from .views import UserInfoView, ImageUploadView, UpdatePwdView, SendEmailCodeView, UpdateEmailView
-
+from .views import MyFavFoodView, MyMessageView
 
 urlpatterns = [
     # 用户基本信息
@@ -21,4 +21,10 @@ urlpatterns = [
 
     # 个人中心修改邮箱
     url(r'^update_email/$', UpdateEmailView.as_view(), name="update_email"),
+
+    # 我的收藏
+    url(r'^fav_food/$', MyFavFoodView.as_view(), name="fav_food"),
+
+    # 我的消息
+    url(r'^my_message/$', MyMessageView.as_view(), name="my_message"),
 ]

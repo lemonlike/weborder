@@ -8,11 +8,12 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic.base import View
 import json
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import UserProfile
 from utils.mixin_utils import LoginRequiredMixin
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UserInfoForm, ImageUploadForm
-from operation.models import UserMessage
+from operation.models import UserMessage, UserFavorite
 from utils.email_send import send_email
 from .models import EmailVerifyRecord
 
@@ -261,3 +262,32 @@ class UpdateEmailView(LoginRequiredMixin, View):
             return HttpResponse('{"email":"验证码错误"}', content_type='application/json')
 
 
+class MyFavFoodView(LoginRequiredMixin, View):
+    """
+    我的收藏
+    """
+    def get(self, request):
+        fav_foods = UserFavorite.objects.filter(user=request.user)
+        return render(request, "usercenter-fav-course.html", {
+            "fav_foods": fav_foods
+        })
+
+
+class MyMessageView(LoginRequiredMixin, View):
+    """
+    我的消息
+    """
+    def get(self, request):
+        user_messages = UserMessage.objects.filter(name=request.user.id)
+
+        # 对用户消息进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(user_messages, 5, request=request)
+        messages = p.page(page)
+        return render(request, "usercenter-message.html", {
+            "messages": messages
+        })

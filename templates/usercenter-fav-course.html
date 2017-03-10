@@ -1,0 +1,52 @@
+{% extends 'usercenter-base.html' %}
+{% load staticfiles %}
+
+{% block title %}我的收藏- 在线点餐网{% endblock %}
+
+{% block bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="{% url 'index' %}">首页</a>></li>
+                <li>我的收藏</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block right_content %}
+    <div class="right">
+        <div class="personal_des Releasecont">
+            <div class="head">
+                <h1>我的收藏</h1>
+            </div>
+        </div>
+        <div class="personal_des permessage">
+            <div class="companycenter">
+                <div class="group_list brief">
+                    {% for fav_food in fav_foods %}
+                        <div class="module1_5 box">
+                            <a href="{% url 'food:food_detail' fav_food.food_id %}">
+                                <img width="214" height="190"
+                                     src="{{ MEDIA_URL }}{{ fav_food.food.image }}"/>
+                            </a>
+                            <div class="des">
+                                <a href="{% url 'food:food_detail' fav_food.food_id %}"><h2>{{ fav_food.food.name }}</h2></a>
+                                <span class="fl">价格：<i class="key">{{ fav_food.food.price }}元</i></span>
+                                <span class="fr">下单数：{{ fav_food.food.buy_nums }}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="fl">{{ fav_food.food.get_category_display }}</span>
+                                <span class="delete-group fr jsDeleteFav_course" data-fav_food_id="{{ fav_food.food_id }}"></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
