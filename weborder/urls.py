@@ -63,4 +63,7 @@ urlpatterns = [
 
     # 菜单相关url配置
     url(r'^food/', include('foods.urls', namespace="food")),
+
+    # 用户个人中心相关url配置
+    url(r'^users/', include('users.urls', namespace="users")),
 ]

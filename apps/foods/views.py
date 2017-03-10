@@ -8,7 +8,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
 
 from .models import Food
-from operation.models import UserFavorite
+from operation.models import UserFavorite, FoodComments
 
 
 class FoodListView(View):
@@ -63,10 +63,14 @@ class FoodDetailView(View):
             if UserFavorite.objects.filter(user=request.user, food_id=food.id):
                 has_fav_food = True
 
+        # 显示菜品评论
+        food_comments = FoodComments.objects.filter(food_id=food_id).order_by("-add_time")
+
         return render(request, "food-detail.html", {
             "food": food,
             "relate_foods": relate_foods,
             "has_fav_food": has_fav_food,
+            "food_comments": food_comments,
         })
 
 
@@ -74,6 +78,7 @@ class AddFavView(View):
     """
     用户收藏和取消收藏
     """
+
     def post(self, request):
         user_id = request.POST.get('user_id', 0)
         food_id = request.POST.get('food_id', 0)
@@ -110,3 +115,27 @@ class AddFavView(View):
                 return HttpResponse('{"status":"success", "msg":"已收藏"}', content_type="application/json")
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type="application/json")
+
+
+class AddCommentsView(View):
+    """
+    用户添加评论
+    """
+
+    def post(self, request):
+        if not request.user.is_authenticated():
+            # 判断用户登陆状态
+            return HttpResponse('{"status":"fail", "msg":"用户未登录"}', content_type="application/json")
+
+        food_id = request.POST.get("food_id", 0)
+        comments = request.POST.get("comments", "")
+        if food_id > 0 and comments:
+            food_comment = FoodComments()
+            food = Food.objects.get(id=int(food_id))
+            food_comment.user = request.user
+            food_comment.food = food
+            food_comment.comments = comments
+            food_comment.save()
+            return HttpResponse('{"status":"success", "msg":"评论成功"}', content_type="application/json")
+        else:
+            return HttpResponse('{"status":"fail", "msg":"评论失败"}', content_type="application/json")
