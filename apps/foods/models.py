@@ -70,3 +70,13 @@ class Room(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class ShopCart(models.Model):
+    user = models.ForeignKey(UserProfile, verbose_name=u"用户")
+    food = models.ForeignKey(Food, verbose_name=u"菜单")
+    add_time = models.DateTimeField(verbose_name=u"添加时间", default=datetime.now)
+
+    class Meta:
+        verbose_name = u"购物车"
+        verbose_name_plural = verbose_name

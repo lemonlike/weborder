@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}购物车 - 在线点餐网{% endblock %}
+
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li>购物车</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div class="layout">
+        <dl class="des difdes">
+            <dt>
+                <a href="org-detail-homepage.html">
+                    <img width="200" height="120" class="scrollLoading" data-url="../media/org/2016/11/imooc.png"/>
+                </a>
+            </dt>
+            <dd>
+                <div class="clearfix">
+                    <a href="org-detail-homepage.html">
+                        <h1>慕课网</h1>
+                        <div class="pic fl">
+
+                            <img src="../images/authentication.png"/>
+
+                            <img src="../images/gold.png"/>
+
+                        </div>
+                    </a>
+                </div>
+                <ul class="cont">
+                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
+                        <p class="c7">学习人数：<span>1000</span></p></li>
+                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
+                    <li class="pic10" style="padding-left:18px;">经典课程：
+
+                        <a href="/diary/19/">c语言基础入门</a>
+
+                        <a href="/diary/16/">数据库基础</a>
+
+                    </li>
+                </ul>
+            </dd>
+            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+        </dl>
+    </div>
+{% endblock %}

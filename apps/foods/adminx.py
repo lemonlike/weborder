@@ -3,7 +3,7 @@ __author__ = 'lemon'
 
 import xadmin
 
-from .models import Food, Order, OrderDetail, Room
+from .models import Food, Order, OrderDetail, Room, ShopCart
 
 
 class FoodAdmin(object):
@@ -24,6 +24,20 @@ class OrderDetailAdmin(object):
     search_fields = ['order__id', 'food__name']
     list_filter = ['order__id', 'food__name']
 
+
+class RoomAdmin(object):
+    list_display = ['name', 'category', 'has_order', 'add_time']
+    search_fields = ['name', 'category', 'has_order']
+    list_filter = ['name', 'category', 'has_order', 'add_time']
+
+
+class ShopCartAdmin(object):
+    list_display = ['user', 'food', 'add_time']
+    search_fields = ['user__username', 'food__name']
+    list_filter = ['user__username', 'food__name']
+
 xadmin.site.register(Food, FoodAdmin)
 xadmin.site.register(Order, OrderAdmin)
 xadmin.site.register(OrderDetail, OrderDetailAdmin)
+xadmin.site.register(Room, RoomAdmin)
+xadmin.site.register(ShopCart, ShopCartAdmin)

@@ -64,7 +64,7 @@
                                 <div class="btn colectgroupbtn" id="jsLeftBtn">
                                     {% if has_fav_food %}已收藏{% else %}收藏{% endif %}
                                 </div>
-                                <div class="buy btn"><a style="color: white" href="">加入购物车</a>
+                                <div class="buy btn"><a style="color: white" href="{% url 'food:cart_add' food.id %}">加入购物车</a>
                                 </div>
                             </div>
                         </div>

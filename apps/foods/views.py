@@ -5,10 +5,12 @@ from django.shortcuts import render
 
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
-from .models import Food
+from .models import Food, ShopCart
 from operation.models import UserFavorite, FoodComments
+from utils.mixin_utils import LoginRequiredMixin
 
 
 class FoodListView(View):
@@ -139,3 +141,20 @@ class AddCommentsView(View):
             return HttpResponse('{"status":"success", "msg":"评论成功"}', content_type="application/json")
         else:
             return HttpResponse('{"status":"fail", "msg":"评论失败"}', content_type="application/json")
+
+
+class AddShopCartView(LoginRequiredMixin, View):
+    """
+    加入购物车
+    """
+    def get(self, request, food_id):
+        shop_cart = ShopCart()
+        shop_cart.user = request.user
+        shop_cart.food_id = food_id
+        shop_cart.save()
+        return HttpResponseRedirect(reverse("index"))
+
+
+class ShopCartView(View):
+    def get(self, request):
+        return render(request, "shopping-cart.html")

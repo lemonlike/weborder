@@ -3,7 +3,7 @@ __author__ = 'lemon'
 
 from django.conf.urls import url
 
-from .views import FoodListView, FoodDetailView, AddFavView, AddCommentsView
+from .views import FoodListView, FoodDetailView, AddFavView, AddCommentsView, AddShopCartView, ShopCartView
 
 
 urlpatterns = [
@@ -18,4 +18,10 @@ urlpatterns = [
 
     # 添加课程评论
     url(r'^add_comment/$', AddCommentsView.as_view(), name="add_comment"),
+
+    # 加入购物车
+    url(r'^cart_add/(?P<food_id>\d+)/$', AddShopCartView.as_view(), name="cart_add"),
+
+    # 购物车页面
+    url(r'^shop_cart/$', ShopCartView.as_view(), name="shop_cart"),
 ]
