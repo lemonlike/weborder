@@ -34,16 +34,34 @@
                 <ul class="cont">
                     <li class="first"><p class="pic9">类别：<span>{{ shop_cart.food.get_category_display }}</span></p>
                         </li>
-
+                    <li class="first"><p class="pic9">数量：<span>{{ shop_cart.quantity }}</span></p>
+                        </li>
                 </ul>
             </dd>
-            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>{{ shop_cart.food.price }}<br/>元</div>
+            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>{{ shop_cart.augment_price }}<br/>元</div>
         </dl>
         {% endfor %}
-    <div>
+    <form action="" method="post" autocomplete="off">
+        <div>
         预订时间：
         <input type="text" id="preset_time" name="preset_time" value="" readonly="readonly"/>
     </div>
+    <div>
+        预定包间：
+        <select name="room_num">
+            {% for room in rooms %}
+            <option value="{{ room.name }}">{{ room.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div>
+        应付金额：{{ total_price }}元
+        <input type="hidden" name="total_price" value="{{ total_price }}">
+    </div>
+    <input type="submit" value="确认支付">
+    {% csrf_token %}
+    </form>
+
 
     </div>
     </div>
@@ -62,7 +80,3 @@ laydate({
 });
 </script>
 {% endblock %}
-
-{#{% block custom_js %}#}
-{#<script src="{% static 'js/deco-user.js' %}" ></script>#}
-{#{% endblock %}#}

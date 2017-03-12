@@ -37,7 +37,7 @@ class Order(models.Model):
     has_pay = models.BooleanField(verbose_name=u"是否支付", default=False)
     total_money = models.IntegerField(verbose_name=u"总金额", default=0)
     order_time = models.DateTimeField(verbose_name=u"下单时间", default=datetime.now)
-    preset_time = models.DateTimeField(verbose_name=u"预订时间")
+    preset_time = models.CharField(verbose_name=u"预订时间", max_length=20, default="")
     room_num = models.CharField(verbose_name=u"包间号", max_length=5, default="")
 
     class Meta:
@@ -51,6 +51,7 @@ class Order(models.Model):
 class OrderDetail(models.Model):
     order = models.ForeignKey(Order, verbose_name=u"订单")
     food = models.ForeignKey(Food, verbose_name=u"菜单")
+    quantity = models.IntegerField(verbose_name=u"一种菜的数量", default=1)
 
     class Meta:
         verbose_name = u"订单详情"
@@ -75,8 +76,12 @@ class Room(models.Model):
 class ShopCart(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u"用户")
     food = models.ForeignKey(Food, verbose_name=u"菜单")
+    quantity = models.IntegerField(verbose_name=u"一种菜的数量", default=1)
     add_time = models.DateTimeField(verbose_name=u"添加时间", default=datetime.now)
 
     class Meta:
         verbose_name = u"购物车"
         verbose_name_plural = verbose_name
+
+    def augment_price(self):
+        return self.food.price * self.quantity

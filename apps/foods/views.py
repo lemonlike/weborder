@@ -8,7 +8,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from .models import Food, ShopCart
+from .models import Food, ShopCart, Room
 from operation.models import UserFavorite, FoodComments
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -149,13 +149,38 @@ class AddShopCartView(LoginRequiredMixin, View):
     """
     def get(self, request, food_id):
         shop_cart = ShopCart()
-        shop_cart.user = request.user
-        shop_cart.food_id = food_id
-        shop_cart.save()
+
+        # 统计数量
+        exist_food = ShopCart.objects.get(food_id=food_id)
+        if exist_food:
+            exist_food.quantity += 1
+            exist_food.save()
+        else:
+            shop_cart.user = request.user
+            shop_cart.food_id = food_id
+            shop_cart.save()
         return HttpResponseRedirect(reverse("index"))
 
 
 class ShopCartView(View):
+    """
+    购物车详情页
+    """
     def get(self, request):
+        # 取得购物车记录
         shop_carts = ShopCart.objects.filter(user=request.user)
-        return render(request, "shopping-cart.html", {"shop_carts": shop_carts})
+
+        # 计算订单总价格
+        total_price = 0
+        for shop_cart in shop_carts:
+            total_price += shop_cart.augment_price()
+
+        # 取得包间记录
+        rooms = Room.objects.filter(has_order=False)
+        return render(request, "shopping-cart.html", {
+            "shop_carts": shop_carts,
+            "rooms": rooms,
+            "total_price": total_price
+        })
+
+

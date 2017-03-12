@@ -20,7 +20,7 @@ class OrderAdmin(object):
 
 
 class OrderDetailAdmin(object):
-    list_display = ['order', 'food']
+    list_display = ['order', 'food', 'quantity']
     search_fields = ['order__id', 'food__name']
     list_filter = ['order__id', 'food__name']
 
@@ -32,7 +32,7 @@ class RoomAdmin(object):
 
 
 class ShopCartAdmin(object):
-    list_display = ['user', 'food', 'add_time']
+    list_display = ['user', 'food', 'quantity', 'add_time']
     search_fields = ['user__username', 'food__name']
     list_filter = ['user__username', 'food__name']
 
