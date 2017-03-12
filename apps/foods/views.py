@@ -157,4 +157,5 @@ class AddShopCartView(LoginRequiredMixin, View):
 
 class ShopCartView(View):
     def get(self, request):
-        return render(request, "shopping-cart.html")
+        shop_carts = ShopCart.objects.filter(user=request.user)
+        return render(request, "shopping-cart.html", {"shop_carts": shop_carts})

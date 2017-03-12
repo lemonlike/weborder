@@ -15,40 +15,54 @@
 {% endblock %}
 
 {% block content %}
+    <div class="wp butler_list_box list">
+    <div class="butler_list company list">
     <div class="layout">
+        {% for shop_cart in shop_carts %}
         <dl class="des difdes">
             <dt>
-                <a href="org-detail-homepage.html">
-                    <img width="200" height="120" class="scrollLoading" data-url="../media/org/2016/11/imooc.png"/>
+                <a href="{% url 'food:food_detail' shop_cart.food.id %}">
+                    <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ shop_cart.food.image }}"/>
                 </a>
             </dt>
             <dd>
                 <div class="clearfix">
-                    <a href="org-detail-homepage.html">
-                        <h1>慕课网</h1>
-                        <div class="pic fl">
-
-                            <img src="../images/authentication.png"/>
-
-                            <img src="../images/gold.png"/>
-
-                        </div>
+                    <a href="{% url 'food:food_detail' shop_cart.food.id %}">
+                        <h1>{{ shop_cart.food.name }}</h1>
                     </a>
                 </div>
                 <ul class="cont">
-                    <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                        <p class="c7">学习人数：<span>1000</span></p></li>
-                    <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                    <li class="pic10" style="padding-left:18px;">经典课程：
+                    <li class="first"><p class="pic9">类别：<span>{{ shop_cart.food.get_category_display }}</span></p>
+                        </li>
 
-                        <a href="/diary/19/">c语言基础入门</a>
-
-                        <a href="/diary/16/">数据库基础</a>
-
-                    </li>
                 </ul>
             </dd>
-            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
+            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>{{ shop_cart.food.price }}<br/>元</div>
         </dl>
+        {% endfor %}
+    <div>
+        预订时间：
+        <input type="text" id="preset_time" name="preset_time" value="" readonly="readonly"/>
     </div>
+
+    </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+$(function(){
+laydate({
+        elem: '#preset_time',
+        format: 'YYYY-MM-DD hh:mm',
+        min: laydate.now(),
+        max: laydate.now(+7),
+        istime: true,
+        festival: true
+
+    });
+});
+</script>
 {% endblock %}
+
+{#{% block custom_js %}#}
+{#<script src="{% static 'js/deco-user.js' %}" ></script>#}
+{#{% endblock %}#}
