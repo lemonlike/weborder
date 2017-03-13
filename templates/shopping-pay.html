@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付页面</title>
+</head>
+<body>
+应支付：
+{{ total_money }}元
+<div>
+    <form action="{% url 'food:complete_pay' %}" method="post" autocomplete="off">
+         <input type="hidden" value="{{ order_id }}" name="order_id" >
+        <input type="submit" value="完成支付">
+        {% csrf_token %}
+    </form>
+
+</div>
+</body>
+</html>

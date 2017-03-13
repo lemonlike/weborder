@@ -14,15 +14,15 @@ class FoodAdmin(object):
 
 
 class OrderAdmin(object):
-    list_display = ['user', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
-    search_fields = ['user__username', 'room_num', 'total_money', 'has_pay']
-    list_filter = ['user__username', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
+    list_display = ['id', 'user', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
+    search_fields = ['id', 'user__username', 'room_num', 'total_money', 'has_pay']
+    list_filter = ['id', 'user__username', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
 
 
 class OrderDetailAdmin(object):
     list_display = ['order', 'food', 'quantity']
-    search_fields = ['order__id', 'food__name']
-    list_filter = ['order__id', 'food__name']
+    search_fields = ['detail_id', 'order__id', 'food__name']
+    list_filter = ['detail_id', 'order__id', 'food__name']
 
 
 class RoomAdmin(object):

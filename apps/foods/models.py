@@ -38,7 +38,7 @@ class Order(models.Model):
     total_money = models.IntegerField(verbose_name=u"总金额", default=0)
     order_time = models.DateTimeField(verbose_name=u"下单时间", default=datetime.now)
     preset_time = models.CharField(verbose_name=u"预订时间", max_length=20, default="")
-    room_num = models.CharField(verbose_name=u"包间号", max_length=5, default="")
+    room_num = models.CharField(verbose_name=u"包间号", max_length=20, default="")
 
     class Meta:
         verbose_name = u"订单"
@@ -49,17 +49,21 @@ class Order(models.Model):
 
 
 class OrderDetail(models.Model):
+    detail_id = models.IntegerField(primary_key=True, verbose_name=u"订单详情id", default=1)
     order = models.ForeignKey(Order, verbose_name=u"订单")
     food = models.ForeignKey(Food, verbose_name=u"菜单")
-    quantity = models.IntegerField(verbose_name=u"一种菜的数量", default=1)
+    quantity = models.IntegerField(verbose_name=u"数量", default=1)
 
     class Meta:
         verbose_name = u"订单详情"
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return str(self.detail_id)
+
 
 class Room(models.Model):
-    name = models.CharField(verbose_name=u"包间名", max_length=10)
+    name = models.CharField(verbose_name=u"包间名", max_length=20)
     category = models.CharField(verbose_name=u"种类", max_length=8,
                                 choices=(("big", u"12人间"), ("middle", u"8人间"), ("small", u"6人间")))
     has_order = models.BooleanField(verbose_name=u"是否预订", default=False)

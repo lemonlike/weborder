@@ -91,7 +91,7 @@
                                 <a href="{% url 'food:shop_cart' %}">购物车</a>
                             </li>
                             <li {% if request.path|slice:'9' == '/org/list' %}class="active"{% endif %}>
-                                <a href="">我的订单</a></li>
+                                <a href="{% url 'food:my_order' %}">我的订单</a></li>
                         </ul>
                     </div>
                 </div>

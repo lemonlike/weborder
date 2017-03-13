@@ -41,7 +41,7 @@
             <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>{{ shop_cart.augment_price }}<br/>元</div>
         </dl>
         {% endfor %}
-    <form action="" method="post" autocomplete="off">
+    <form action="{% url 'food:confirm_order' %}" method="post" autocomplete="off">
         <div>
         预订时间：
         <input type="text" id="preset_time" name="preset_time" value="" readonly="readonly"/>

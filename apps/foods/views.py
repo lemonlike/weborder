@@ -8,7 +8,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from .models import Food, ShopCart, Room
+from .models import Food, ShopCart, Room, Order, OrderDetail
 from operation.models import UserFavorite, FoodComments
 from utils.mixin_utils import LoginRequiredMixin
 
@@ -151,10 +151,11 @@ class AddShopCartView(LoginRequiredMixin, View):
         shop_cart = ShopCart()
 
         # 统计数量
-        exist_food = ShopCart.objects.get(food_id=food_id)
-        if exist_food:
-            exist_food.quantity += 1
-            exist_food.save()
+        exist_foods = ShopCart.objects.filter(food_id=food_id)
+        if exist_foods:
+            for exist_food in exist_foods:
+                exist_food.quantity += 1
+                exist_food.save()
         else:
             shop_cart.user = request.user
             shop_cart.food_id = food_id
@@ -184,3 +185,70 @@ class ShopCartView(View):
         })
 
 
+class ConfirmOrder(View):
+    """
+    确认订单
+    """
+    def post(self, request):
+        total_money = request.POST.get("total_price", '')
+        preset_time = request.POST.get("preset_time", '')
+        room_num = request.POST.get("room_num", '')
+
+        # 存储订单数据
+        order = Order()
+        order.user = request.user
+        order.total_money = total_money
+        order.preset_time = preset_time
+        order.room_num = room_num
+        order.save()
+
+        # 包间已预订
+        # order_rooms = Room.objects.filter(name=room_num)
+        # if order_rooms:
+        #     for order_room in order_rooms:
+        #         order_room.has_order = True
+        #         order_room.save()
+
+        # 存储订单详情数据
+        order_detail = OrderDetail()
+        shop_carts = ShopCart.objects.filter(user=request.user)
+        # 每次存数据时，先确定detail_id 的起始值
+        order_detail.detail_id = OrderDetail.objects.all().count()
+        for shop_cart in shop_carts:
+            order_detail.detail_id += 1
+            order_detail.order_id = order.id
+            order_detail.food = shop_cart.food
+            order_detail.quantity = shop_cart.quantity
+            order_detail.save()
+
+        shop_carts.all().delete()
+
+        return render(request, "shopping-pay.html", {
+            "total_money": total_money,
+            "order_id": order.id
+        })
+
+
+class CompletePayView(View):
+    """
+    完成支付
+    """
+    def post(self, request):
+        order_id = request.POST.get("order_id", '')
+        orders = Order.objects.filter(id=order_id)
+        if orders:
+            for order in orders:
+                order.has_pay = True
+                order.save()
+            return HttpResponseRedirect(reverse("index"))
+
+
+class MyOrderView(View):
+    """
+    我的订单
+    """
+    def get(self, request):
+        my_orders = Order.objects.filter(user=request.user)
+        return render(request, "shopping-order.html", {
+            "my_orders": my_orders,
+        })

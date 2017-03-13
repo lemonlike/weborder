@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}我的订单 - 在线点餐网{% endblock %}
+
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li>我的订单</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div>
+    <table border="1">
+        <tr>
+            <th>订单号</th>
+            <th>包间号</th>
+            <th>预定时间</th>
+            <th>下单时间</th>
+            <th>支付状态</th>
+        </tr>
+        {% for my_order in my_orders %}
+        <tr>
+        <td>{{ my_order.id }}</td>
+        <td>{{ my_order.room_num }}</td>
+        <td>{{ my_order.preset_time }}</td>
+        <td>{{ my_order.order_time }}</td>
+        <td>{% if my_order.has_pay %}已支付{% else %}未支付{% endif %}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    </div>
+
+{% endblock %}
