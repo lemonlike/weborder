@@ -54,6 +54,7 @@ class UserMessage(models.Model):
 
 
 class UserFood(models.Model):
+    user_food_id = models.IntegerField(primary_key=True, verbose_name=u"点过的菜id", default=1)
     user = models.ForeignKey(UserProfile, verbose_name=u"用户")
     food = models.ForeignKey(Food, verbose_name=u"菜品")
 

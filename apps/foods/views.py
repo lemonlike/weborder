@@ -213,10 +213,12 @@ class ConfirmOrder(View):
         order_detail = OrderDetail()
         # 存储用户点过的菜
         user_food = UserFood()
+
         shop_carts = ShopCart.objects.filter(user=request.user)
         # 每次存数据时，先确定detail_id的起始值
         order_detail.detail_id = OrderDetail.objects.all().count()
         # 每次存数据时，先确定user_food_id的起始值
+        user_food.user_food_id = UserFood.objects.all().count()
 
         for shop_cart in shop_carts:
             order_detail.detail_id += 1
@@ -225,7 +227,7 @@ class ConfirmOrder(View):
             order_detail.quantity = shop_cart.quantity
             # 菜品下单数自增
             food = Food.objects.get(id=order_detail.food_id)
-            food.buy_nums = order_detail.quantity
+            food.buy_nums += order_detail.quantity
             food.save()
             order_detail.save()
 
@@ -234,6 +236,7 @@ class ConfirmOrder(View):
             if has_order_food:
                 pass
             else:
+                user_food.user_food_id += 1
                 user_food.user = request.user
                 user_food.food_id = shop_cart.food_id
                 user_food.save()

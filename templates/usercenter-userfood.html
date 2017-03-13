@@ -31,7 +31,7 @@
                             </a>
                             <div class="des">
                                 <a href="{% url 'food:food_detail' user_food.food_id %}"><h2>{{ user_food.food.name }}</h2></a>
-                                <span class="fl">价格：<i class="key">{{ fav_food.food.price }}元</i></span>
+                                <span class="fl">价格：<i class="key">{{ user_food.food.price }}元</i></span>
                                 <span class="fr">下单数：{{ user_food.food.buy_nums }}</span>
                             </div>
                             <div class="bottom">
