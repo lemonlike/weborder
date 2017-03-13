@@ -26,7 +26,7 @@
         </tr>
         {% for my_order in my_orders %}
         <tr>
-        <td>{{ my_order.id }}</td>
+        <td><a href="{% url 'food:order_detail' my_order.id %}">{{ my_order.id }}</a></td>
         <td>{{ my_order.room_num }}</td>
         <td>{{ my_order.preset_time }}</td>
         <td>{{ my_order.order_time }}</td>

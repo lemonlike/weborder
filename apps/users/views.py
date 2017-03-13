@@ -13,7 +13,7 @@ from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from .models import UserProfile
 from utils.mixin_utils import LoginRequiredMixin
 from .forms import LoginForm, RegisterForm, ForgetForm, ModifyForm, UserInfoForm, ImageUploadForm
-from operation.models import UserMessage, UserFavorite
+from operation.models import UserMessage, UserFavorite, UserFood
 from utils.email_send import send_email
 from .models import EmailVerifyRecord, Banner
 from foods.models import Food
@@ -307,6 +307,7 @@ class UserFoodView(LoginRequiredMixin, View):
     点过的菜
     """
     def get(self, request):
-        return render(request, "usercenter-userfood.html")
+        user_foods = UserFood.objects.filter(user=request.user)
+        return render(request, "usercenter-userfood.html", {"user_foods": user_foods})
 
 

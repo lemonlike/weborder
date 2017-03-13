@@ -14,5 +14,34 @@
 {% endblock %}
 
 {% block right_content %}
-
+<div class="right">
+        <div class="personal_des Releasecont">
+            <div class="head">
+                <h1>点过的菜</h1>
+            </div>
+        </div>
+        <div class="personal_des permessage">
+            <div class="companycenter">
+                <div class="group_list brief">
+                    {% for user_food in user_foods %}
+                        <div class="module1_5 box">
+                            <a href="{% url 'food:food_detail' user_food.food_id %}">
+                                <img width="214" height="190"
+                                     src="{{ MEDIA_URL }}{{ user_food.food.image }}"/>
+                            </a>
+                            <div class="des">
+                                <a href="{% url 'food:food_detail' user_food.food_id %}"><h2>{{ user_food.food.name }}</h2></a>
+                                <span class="fl">价格：<i class="key">{{ fav_food.food.price }}元</i></span>
+                                <span class="fr">下单数：{{ user_food.food.buy_nums }}</span>
+                            </div>
+                            <div class="bottom">
+                                <span class="fl">{{ user_food.food.get_category_display }}</span>
+                                <span class="delete-group fr jsDeleteFav_course" data-fav_food_id="{{ user_food.food_id }}"></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

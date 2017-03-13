@@ -56,7 +56,6 @@ class UserMessage(models.Model):
 class UserFood(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u"用户")
     food = models.ForeignKey(Food, verbose_name=u"菜品")
-    add_time = models.DateTimeField(verbose_name=u"添加时间", default=datetime.now)
 
     class Meta:
         verbose_name = u"点过的菜"

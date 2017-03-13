@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
 from .models import Food, ShopCart, Room, Order, OrderDetail
-from operation.models import UserFavorite, FoodComments
+from operation.models import UserFavorite, FoodComments, UserFood
 from utils.mixin_utils import LoginRequiredMixin
 
 
@@ -211,15 +211,32 @@ class ConfirmOrder(View):
 
         # 存储订单详情数据
         order_detail = OrderDetail()
+        # 存储用户点过的菜
+        user_food = UserFood()
         shop_carts = ShopCart.objects.filter(user=request.user)
-        # 每次存数据时，先确定detail_id 的起始值
+        # 每次存数据时，先确定detail_id的起始值
         order_detail.detail_id = OrderDetail.objects.all().count()
+        # 每次存数据时，先确定user_food_id的起始值
+
         for shop_cart in shop_carts:
             order_detail.detail_id += 1
             order_detail.order_id = order.id
             order_detail.food = shop_cart.food
             order_detail.quantity = shop_cart.quantity
+            # 菜品下单数自增
+            food = Food.objects.get(id=order_detail.food_id)
+            food.buy_nums = order_detail.quantity
+            food.save()
             order_detail.save()
+
+            # 用户点过的菜
+            has_order_food = UserFood.objects.filter(food_id=shop_cart.food_id)
+            if has_order_food:
+                pass
+            else:
+                user_food.user = request.user
+                user_food.food_id = shop_cart.food_id
+                user_food.save()
 
         shop_carts.all().delete()
 
@@ -251,4 +268,15 @@ class MyOrderView(View):
         my_orders = Order.objects.filter(user=request.user)
         return render(request, "shopping-order.html", {
             "my_orders": my_orders,
+        })
+
+
+class MyOrderDetail(View):
+    """
+    订单详情
+    """
+    def get(self, request, order_id):
+        order_details = OrderDetail.objects.filter(order_id=order_id)
+        return render(request, "shopping-order-detail.html", {
+            "order_details": order_details
         })

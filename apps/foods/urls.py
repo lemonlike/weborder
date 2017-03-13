@@ -4,7 +4,7 @@ __author__ = 'lemon'
 from django.conf.urls import url
 
 from .views import FoodListView, FoodDetailView, AddFavView, AddCommentsView, AddShopCartView, ShopCartView
-from .views import ConfirmOrder, CompletePayView, MyOrderView
+from .views import ConfirmOrder, CompletePayView, MyOrderView, MyOrderDetail
 
 
 urlpatterns = [
@@ -34,4 +34,7 @@ urlpatterns = [
 
     # 我的订单
     url(r'^my_order/$', MyOrderView.as_view(), name="my_order"),
+
+    # 订单详情
+    url(r'^my_order_detail/(?P<order_id>\d+)/$', MyOrderDetail.as_view(), name="order_detail"),
 ]

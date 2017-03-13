@@ -31,9 +31,9 @@ class UserMessageAdmin(object):
 
 
 class UserFoodAdmin(object):
-    list_display = ['user', 'food', 'add_time']
+    list_display = ['user', 'food']
     search_fields = ['user__username', 'food__name']
-    list_filter = ['user__username', 'food__name', 'add_time']
+    list_filter = ['user__username', 'food__name']
 
 xadmin.site.register(UserAsk, UserAskAdmin)
 xadmin.site.register(FoodComments, FoodCommentsAdmin)

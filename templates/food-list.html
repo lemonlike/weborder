@@ -107,13 +107,13 @@
                         {% for hot_food in hot_foods %}
                             <dl>
                                 <dt>
-                                    <a target="_blank" href="">
+                                    <a target="_blank" href="{% url 'food:food_detail' hot_food.id %}">
                                         <img width="240" height="220" class="scrollLoading"
                                              src="{{ MEDIA_URL }}{{ hot_food.image }}"/>
                                     </a>
                                 </dt>
                                 <dd>
-                                    <a target="_blank" href=""><h2>{{ hot_food.name }}</h2></a>
+                                    <a target="_blank" href="{% url 'food:food_detail' hot_food.id %}"><h2>{{ hot_food.name }}</h2></a>
                                     <span class="fl">价格：<i class="key">{{ hot_food.price }}<i
                                             style="font-size: 14px">元</i></i></span>
                                 </dd>
