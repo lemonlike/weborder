@@ -7,55 +7,106 @@
     <title>BootStrapDemo</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
-    <style>
-        body {
-            padding-top: 50px;
+    <style type="text/css">
+        .mynav li {
+            margin-left: 20px;
+            margin-right: 20px;
         }
-        .start{
-            padding:40px 15px;
+        .mybread {
+            margin-top:50px;
+            background-color: white;
+        }
+        .item {
+            background: #333;
             text-align: center;
+            height: 500px;
         }
 
     </style>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Project</a>
+            <button type="button" data-target="#navbar" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">在线点餐网</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
+            <ul class="nav navbar-nav mynav">
+                <li class="active"><a href="{% url 'index' %}"> 首页 </a></li>
+                <li><a href="{% url 'food:food_list' %}"> 全部菜单 </a></li>
+                <li><a href="{% url 'food:shop_cart' %}"> 购物车 </a></li>
+                <li><a href="{% url 'food:my_order' %}"> 我的订单 </a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        你好，{{ request.user.username }} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-user"></span > 个人中心 </a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> 退出 </a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <form role="search" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索你想吃的菜">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="start">
-        <h1>Bootstrap</h1>
-        <p class="lead">Hellooooooooooooooooooooooooo</p>
-    </div>
-</div>
+    <ol class="breadcrumb mybread">
+    <li><a href="#">首页</a></li>
+    <li class="active">首页</li>
+</ol>
+    <div id="myCarousel" class="carousel slide" data-interval="1000" data-ride="carousel">
+        <!-- 轮播图 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="#myCarousel" data-slide-to="4"></li>
 
-<div class="container">
-    <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            下拉菜单
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li><a href="#" role="menuitem">一</a></li>
-                <li><a href="#" role="menuitem">二</a></li>
-                <li><a href="#" role="menuitem">三</a></li>
-                <li><a href="#" role="menuitem">四</a></li>
-            </ul>
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item">
+            <img src="/wp-content/uploads/2014/07/slide1.png" alt="First slide">
+        </div>
+        <div class="item">
+            <img src="/wp-content/uploads/2014/07/slide2.png" alt="Second slide">
+        </div>
+        <div class="item">
+            <img src="/wp-content/uploads/2014/07/slide3.png" alt="Third slide">
+        </div>
     </div>
+         <!-- 轮播（Carousel）导航 -->
+    <a class="carousel-control left" href="#myCarousel"
+        data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="#myCarousel"
+        data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+    </div>
+
+
 </div>
 
 <script src="{% static 'jquery/jquery-3.1.1.js' %}"></script>
 <script src="{% static 'js/bootstrap.js' %}"></script>
+
 </body>
 </html>

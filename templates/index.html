@@ -4,6 +4,7 @@
 {% block title %}首页 - 线上点餐网{% endblock %}
 
 {% block custom_bread %}
+
 {% endblock %}
 
 {% block custom_js %}
@@ -13,28 +14,35 @@
 
 {% block content %}
 
-    <div class="banner">
-        <div class="wp">
-            <div class="fl">
-                <div class="imgslide">
-                    <ul class="imgs">
-                    {% for banner in all_banners %}
-                        <li>
-                            <a href="{{ banner.url }}">
-                                <img width="1200" height="478"
-                                     src="{{ MEDIA_URL }}{{ banner.image }}"/>
-                            </a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </div>
-                <div class="unslider-arrow prev"></div>
-                <div class="unslider-arrow next"></div>
-            </div>
+   <div id="myCarousel" class="carousel slide" data-interval="1000" data-ride="carousel">
+        <!-- 轮播图 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="#myCarousel" data-slide-to="4"></li>
 
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="/wp-content/uploads/2014/07/slide1.png" alt="First slide">
         </div>
+        {% for banner in all_banners %}
+        <div {% ifequal {{ banner.index }} %}{% endifequal %}class="item">
+            <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="Second slide">
+        </div>
+        {% endfor %}
 
-
+    </div>
+         <!-- 轮播（Carousel）导航 -->
+    <a class="carousel-control left" href="#myCarousel"
+        data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="#myCarousel"
+        data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
     </div>
     <!--banner end-->
     <!--feature start-->

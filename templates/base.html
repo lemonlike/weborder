@@ -3,113 +3,98 @@
 {% load staticfiles %}
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>{% block title %}首页 - 线上点餐网{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
+    <style type="text/css">
+        .mynav li {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        .mybread {
+            margin-top:50px;
+            background-color: white;
+        }
+        .item {
+            background: #333;
+            text-align: center;
+            height: 500px;
+        }
+    </style>
     {% block custom_css %}{% endblock %}
+    <script src="{% static 'jquery/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+
     <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
     {% block custom_js %}{% endblock %}
 </head>
 <body>
-<section class="headerwrap ">
-    <header>
-        <div class=" header">
-            <div class="top">
-                <div class="wp">
-                    <div class="fl"><p>服务电话：<b>62331111</b></p></div>
-                    <!--登录后跳转-->
-                    {% if request.user.is_authenticated %}
-                        <div class="personal">
-                            <dl class="user fr">
-                                <dd>{{ request.user.username }}<img class="down fr" src="/static/images/top_down.png"/>
-                                </dd>
-                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
-                            </dl>
-                            <div class="userdetail">
-                                <dl>
-                                    <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
-                                    </dt>
-                                    <dd>
-                                        <h2>{{ request.user.nick_name }}</h2>
-                                        <p>{{ request.user.username }}</p>
-                                    </dd>
-                                </dl>
-                                <div class="btn">
-                                    <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                    <a class="fr" href="{% url 'logout' %}">退出</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a style="color:white" class="fr registerbtn" href={% url 'register' %}>注册</a>
-                        <a style="color:white" class="fr loginbtn" href={% url 'login' %}>登录</a>
-                    {% endif %}
-                    <a href="">
-                        <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
-                    </a>
-
-                </div>
-            </div>
-
-            <div class="middle">
-                <div class="wp">
-                    <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>
-                    <div class="searchbox fr">
-                        <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption" data-value="course">
-                                菜单
-                            </span>
-                            <ul class="selectMenu" id="jsSelectMenu">
-                                <li data-value="course">公开课</li>
-                                <li data-value="org">课程机构</li>
-                                <li data-value="teacher">授课老师</li>
-                            </ul>
-                        </div>
-                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
-                        <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>
-                    </div>
-                </div>
-            </div>
-
-
-            <nav>
-                <div class="nav">
-                    <div class="wp">
-                        <ul>
-                            <li {% if request.path == '/' %}class="active"{% endif %}>
-                                <a href="{% url 'index' %}">首页</a></li>
-                            <li {% if request.path|slice:'10' == '/food/list' %}class="active"{% endif %}>
-                                <a href="{% url 'food:food_list' %}">全部菜单
-                                    <img class="hot" src="{% static 'images/nav_hot.png' %}">
-                                </a>
-                            </li>
-                            <li {% if request.path|slice:'10' == '/food/shop' %}class="active"{% endif %}>
-                                <a href="{% url 'food:shop_cart' %}">购物车</a>
-                            </li>
-                            <li {% if request.path|slice:'8' == '/food/my' %}class="active"{% endif %}>
-                                <a href="{% url 'food:my_order' %}">我的订单</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" data-target="#navbar" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">在线点餐网</a>
         </div>
-    </header>
-</section>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav mynav">
+                <li class="active"><a href="{% url 'index' %}"> 首页 </a></li>
+                <li><a href="{% url 'food:food_list' %}"> 全部菜单 </a></li>
+                <li><a href="{% url 'food:shop_cart' %}"> 购物车 </a></li>
+                <li><a href="{% url 'food:my_order' %}"> 我的订单 </a></li>
+            </ul>
+
+            <!--登录后跳转-->
+            {% if request.user.is_authenticated %}
+                <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        你好，{{ request.user.username }} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-user"></span > 个人中心 </a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> 退出 </a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href={% url 'login' %}><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    <li><a href={% url 'register' %}><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                </ul>
+            {% endif %}
+
+
+
+            <form role="search" class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索你想吃的菜">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
 <!--crumbs start-->
 {% block custom_bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
-                <li><a href="index.html">首页</a>></li>
-
-            </ul>
-        </div>
-    </section>
+    <ol class="breadcrumb mybread">
+    <li><a href="#">首页</a></li>
+    <li class="active">首页</li>
+</ol>
 {% endblock %}
 {% block content %}
 
