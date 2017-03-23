@@ -4,8 +4,7 @@
 }
 
 .mybread {
-    margin-top: 50px;
-    background-color: white;
+
 }
 
 .item {
@@ -15,16 +14,24 @@
 }
 
 #myCarousel {
-    margin-top: 60px;
+    margin-top: 0;
     /*width: 970px;*/
 }
 
 .myfeature {
-    border: 1px solid #ccc;
-    height: 125px;
+    margin-top: 20px;
+    /*border: 1px solid #ccc;*/
+}
+/*实现左右摇摆的动画效果*/
+.myfeature .col-md-3:hover .mypic {
+    -webkit-animation: swing .4s .2s ease both;
+    -moz-animation: swing .4s .2s ease both;
 }
 
+
 .myfooter {
-    height: 500px;
-    background-color: #00a0dc;
+    /*height: 320px;*/
+    width: 100%;
+    background-color: gainsboro;
+
 }

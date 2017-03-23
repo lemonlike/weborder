@@ -1743,7 +1743,7 @@ textarea:focus {
 
 /*feature*/
 .feature {
-    height: 100px;
+    height: 125px;
     border: 1px solid #ccc;
     margin: 30px 0;
 }
@@ -1763,13 +1763,13 @@ textarea:focus {
 
 .feature .center {
     margin-top: 70px;
-    color: #464646;
+    color: grey;
 }
 
 .feature .pic {
     position: absolute;
     top: 20px;
-    left: 125px;
+    left: 120px;
     transition: all 0.5s ease 0s;
 }
 

@@ -4,37 +4,119 @@
 {% block title %}菜单列表 - 在线点餐网{% endblock %}
 
 {% block custom_bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
-                <li><a href="index.html">首页</a>></li>
-                <li>菜单列表</li>
-            </ul>
-        </div>
-    </section>
+    <li><a href="#">首页</a></li>
+    <li class="active">菜单列表</li>
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-md-9">
+
+            <ul class="nav nav-pills nav-justified">
+                <li class="{% if category == '' %}active{% endif %}"><a href="?ct=&sort={{ sort }}">全部</a></li>
+                <li class="{% if category == 'rh' %}active{% endif %}"><a href="?ct=rh&sort={{ sort }}">热荤</a></li>
+                <li class="{% if category == 'rs' %}active{% endif %}"><a href="?ct=rs&sort={{ sort }}">热素</a></li>
+                <li class="{% if category == 'lc' %}active{% endif %}"><a href="?ct=lc&sort={{ sort }}">凉菜</a>
+                </li>
+                <li class="{% if category == 'td' %}active{% endif %}"><a href="?ct=td&sort={{ sort }}">甜点</a></li>
+                <li class="{% if category == 'zs' %}active{% endif %}"><a href="?ct=zs&sort={{ sort }}">主食</a></li>
+                <li class="{% if category == 'js' %}active{% endif %}"><a href="?ct=js&sort={{ sort }}">酒水</a>
+                </li>
+            </ul>
+            <br/>
+            <ul class="nav nav-tabs">
+                <li class="{% if sort == '' %}active{% endif %}"><a href="?ct={{ category }}&sort=">最新 </a>
+                </li>
+                <li class="{% if sort == 'order' %}active{% endif %}"><a
+                        href="?ct={{ category }}&sort=order">下单最多 ↓</a></li>
+                <li class="{% if sort == 'fav' %}active{% endif %}"><a href="?ct={{ category }}&sort=fav">收藏最多
+                    ↓</a>
+                </li>
+            </ul>
+            <br/>
+            {% for food in all_foods.object_list %}
+                <div class="col-md-4">
+                    <div class="thumbnail">
+                        <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}"
+                                                                            alt="菜品图片"></a>
+                        <div class="caption">
+                            <a href="{% url 'food:food_detail' food.id %}">
+                                <h3>{{ food.name }}</h3>
+                            </a>
+                            <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
+                            <span class="fr">下单数：{{ food.buy_nums }}</span>
+                            <br/>
+                            <p>
+                                <span class="fl" title="">{{ food.get_category_display }}</span>
+                                <span class="fr">收藏数：{{ food.fav_nums }}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="pageturn">
+                <ul class="pagelist">
+
+                    {% if all_foods.has_previous %}
+                        <li class="long"><a
+                                href="?{{ all_foods.previous_page_number.querystring }}">上一页</a></li>
+                    {% endif %}
+
+                    {% for page in all_foods.pages %}
+                        {% if page %}
+                            {% ifequal page all_foods.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li><a href="" class="none">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if all_foods.has_next %}
+                        <li class="long"><a
+                                href="?{{ all_foods.next_page_number.querystring }}">下一页</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-3" style="margin-top: -15px">
+            <h3>热门菜品推荐</h3>
+        </div>
+    </div>
     <section>
         <div class="wp">
             <div class="list" style="margin-top:0;">
                 <div class="left layout">
                     <div class="head">
                         <ul class="tab_header">
-                            <li class="{% if category == '' %}active{% endif %}"><a href="?ct=&sort={{ sort }}">全部</a></li>
-                            <li class="{% if category == 'rh' %}active{% endif %}"><a href="?ct=rh&sort={{ sort }}">热荤</a></li>
-                            <li class="{% if category == 'rs' %}active{% endif %}"><a href="?ct=rs&sort={{ sort }}">热素</a></li>
-                            <li class="{% if category == 'lc' %}active{% endif %}"><a href="?ct=lc&sort={{ sort }}">凉菜</a>
+                            <li class="{% if category == '' %}active{% endif %}"><a href="?ct=&sort={{ sort }}">全部</a>
                             </li>
-                            <li class="{% if category == 'td' %}active{% endif %}"><a href="?ct=td&sort={{ sort }}">甜点</a></li>
-                            <li class="{% if category == 'zs' %}active{% endif %}"><a href="?ct=zs&sort={{ sort }}">主食</a></li>
-                            <li class="{% if category == 'js' %}active{% endif %}"><a href="?ct=js&sort={{ sort }}">酒水</a>
+                            <li class="{% if category == 'rh' %}active{% endif %}"><a
+                                    href="?ct=rh&sort={{ sort }}">热荤</a></li>
+                            <li class="{% if category == 'rs' %}active{% endif %}"><a
+                                    href="?ct=rs&sort={{ sort }}">热素</a></li>
+                            <li class="{% if category == 'lc' %}active{% endif %}"><a
+                                    href="?ct=lc&sort={{ sort }}">凉菜</a>
+                            </li>
+                            <li class="{% if category == 'td' %}active{% endif %}"><a
+                                    href="?ct=td&sort={{ sort }}">甜点</a></li>
+                            <li class="{% if category == 'zs' %}active{% endif %}"><a
+                                    href="?ct=zs&sort={{ sort }}">主食</a></li>
+                            <li class="{% if category == 'js' %}active{% endif %}"><a
+                                    href="?ct=js&sort={{ sort }}">酒水</a>
                             </li>
                         </ul>
                         <ul class="tab_header">
-                            <li class="{% if sort == '' %}active{% endif %}"><a href="?ct={{ category }}&sort=">最新 </a></li>
-                            <li class="{% if sort == 'order' %}active{% endif %}"><a href="?ct={{ category }}&sort=order">下单最多 ↓</a></li>
-                            <li class="{% if sort == 'fav' %}active{% endif %}"><a href="?ct={{ category }}&sort=fav">收藏最多 ↓</a>
+                            <li class="{% if sort == '' %}active{% endif %}"><a href="?ct={{ category }}&sort=">最新 </a>
+                            </li>
+                            <li class="{% if sort == 'order' %}active{% endif %}"><a
+                                    href="?ct={{ category }}&sort=order">下单最多 ↓</a></li>
+                            <li class="{% if sort == 'fav' %}active{% endif %}"><a href="?ct={{ category }}&sort=fav">收藏最多
+                                ↓</a>
                             </li>
                         </ul>
                     </div>
@@ -113,7 +195,8 @@
                                     </a>
                                 </dt>
                                 <dd>
-                                    <a target="_blank" href="{% url 'food:food_detail' hot_food.id %}"><h2>{{ hot_food.name }}</h2></a>
+                                    <a target="_blank" href="{% url 'food:food_detail' hot_food.id %}">
+                                        <h2>{{ hot_food.name }}</h2></a>
                                     <span class="fl">价格：<i class="key">{{ hot_food.price }}<i
                                             style="font-size: 14px">元</i></i></span>
                                 </dd>
