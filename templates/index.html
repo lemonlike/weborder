@@ -13,8 +13,7 @@
 {% endblock %}
 
 {% block content %}
-
-   <div id="myCarousel" class="carousel slide" data-interval="1000" data-ride="carousel">
+    <div id="myCarousel" class="carousel slide" data-interval="2000" data-ride="carousel">
         <!-- 轮播图 -->
         <ol class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -25,133 +24,107 @@
 
         </ol>
         <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <img src="/wp-content/uploads/2014/07/slide1.png" alt="First slide">
-        </div>
-        {% for banner in all_banners %}
-        <div {% ifequal {{ banner.index }} %}{% endifequal %}class="item">
-            <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="Second slide">
-        </div>
-        {% endfor %}
+        <div class="carousel-inner">
+            {% for banner in all_banners %}
+                <div class="item {% if banner.index == 1 %}active{% endif %}">
+                    <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="Second slide" height="100%" width="100%">
+                </div>
+            {% endfor %}
 
-    </div>
-         <!-- 轮播（Carousel）导航 -->
-    <a class="carousel-control left" href="#myCarousel"
-        data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>
-    </a>
-    <a class="carousel-control right" href="#myCarousel"
-        data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+        </div>
+        <!-- 轮播（Carousel）导航 -->
+        <a class="carousel-control left" href="#myCarousel"
+           data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="carousel-control right" href="#myCarousel"
+           data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
     </div>
     <!--banner end-->
+
     <!--feature start-->
-    <section>
-        <div class="wp">
-            <ul class="feature">
-                <li class="feature1">
-                    <img class="pic" src="/static/images/feature1.png"/>
-                    <p class="center">专业权威</p>
-                </li>
-                <li class="feature2">
-                    <img class="pic" src="/static/images/feature2.png"/>
-                    <p class="center">课程最新</p>
-                </li>
-                <li class="feature3">
-                    <img class="pic" src="/static/images/feature3.png"/>
-                    <p class="center">名师授课</p>
-                </li>
-                <li class="feature4">
-                    <img class="pic" src="/static/images/feature4.png"/>
-                    <p class="center">数据真实</p>
-                </li>
-            </ul>
+
+    <div class="row feature">
+        <div class="col-md-3">
+            <img class="pic" src="/static/images/feature1.png"/>
+            <p class="center">安全放心</p>
         </div>
-    </section>
+        <div class="col-md-3">
+            <img class="pic" src="/static/images/feature2.png"/>
+            <p class="center">线上支付</p>
+        </div>
+        <div class="col-md-3">
+            <img class="pic" src="/static/images/feature3.png"/>
+            <p class="center">清晨采购</p>
+        </div>
+        <div class="col-md-3">
+            <img class="pic" src="/static/images/feature4.png"/>
+            <p class="center">支持预订</p>
+        </div>
+    </div>
+
     <!--feature end-->
-    <!--module1 start-->
-    <section>
-        <div class="module">
-            <div class="wp">
-                <h1>今日推荐</h1>
-                <div class="module1 eachmod">
-                    <div class="module1_1 left">
-                        <img width="228" height="614" src="/static/images/module1_1.jpg"/>
-                        <p class="fisrt_word">健康美味<br/>价格实惠</p>
-                        <a class="more" href="{% url 'food:food_list' %}">查看更多菜品 ></a>
-                    </div>
-                    <div class="right group_list">
-                        <div class="module1_2 box">
-                            <div class="imgslide2">
-                                <ul class="imgs">
-                                {% for banner_food in banner_foods %}
-                                    <li>
-                                        <a href="{% url 'food:food_detail' banner_food.id %}">
-                                            <img width="470" height="300"
-                                                 src="{{ MEDIA_URL }}{{ banner_food.image }}"/>
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="unslider-arrow2 prev"></div>
-                            <div class="unslider-arrow2 next"></div>
-                        </div>
-                        {% for food in foods %}
-                        <div class="module1_{{ forloop.counter|add:2 }} box">
+
+    <!-- 今日推荐 -->
+    <div>
+        <h1>今日推荐</h1>
+        <div class="row">
+            {% for food in foods %}
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}" alt="菜品图片"></a>
+                        <div class="caption">
                             <a href="{% url 'food:food_detail' food.id %}">
-                                <img width="233" height="190" src="{{ MEDIA_URL }}{{ food.image }}"/>
+                                <h3>{{ food.name }}</h3>
                             </a>
-                            <div class="des">
-                                <a href="{% url 'food:food_detail' food.id %}">
-                                    <h2 title="">{{ food.name }}</h2>
-                                </a>
-                                <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
+                             <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
                                 <span class="fr">下单数：{{ food.buy_nums }}</span>
-                            </div>
-                            <div class="bottom">
-                                <span class="fl" title="">{{ food.get_category_display }}</span>
-                                <span class="star fr">{{ food.fav_nums }}</span>
-                            </div>
+                            <br/>
+                            <p>
+                                 <span class="fl" title="">{{ food.get_category_display }}</span>
+                                <span class="fr">收藏数：{{ food.fav_nums }}</span>
+                            </p>
+
+
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-    </section>
-{#    <section>#}
-{#        <div class="module greybg">#}
-{#            <div class="wp">#}
-{#                <h1>课程机构</h1>#}
-{#                <div class="module3 eachmod">#}
-{#                    <div class="module3_1 left">#}
-{#                        <img width="228" height="463" src="/static/images/module3_1.jpg"/>#}
-{#                        <p class="fisrt_word">名校来袭<br/>权威认证</p>#}
-{#                        <a class="more" href="org-list.html">查看更多机构 ></a>#}
-{#                    </div>#}
-{#                    <div class="right">#}
-{#                        <ul>#}
-{#                        {% for org in all_org %}#}
-{#                            <li class="{% if forloop.counter|divisibleby:5 %}five{% endif %}">#}
-{#                                <a href="{% url 'org:org_home' org.id %}">#}
-{#                                    <div class="company">#}
-{#                                        <img width="184" height="100" src="{{ MEDIA_URL }}{{ org.image }}"/>#}
-{#                                        <div class="score">#}
-{#                                            <div class="circle">#}
-{#                                                <h2>全国知名</h2>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    <p><span class="key" title="慕课网">{{ org.name }}</span></p>#}
-{#                                </a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
-{##}
-{#                        </ul>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </section>#}
+    </div>
+
+    {#    <section>#}
+    {#        <div class="module greybg">#}
+    {#            <div class="wp">#}
+    {#                <h1>课程机构</h1>#}
+    {#                <div class="module3 eachmod">#}
+    {#                    <div class="module3_1 left">#}
+    {#                        <img width="228" height="463" src="/static/images/module3_1.jpg"/>#}
+    {#                        <p class="fisrt_word">名校来袭<br/>权威认证</p>#}
+    {#                        <a class="more" href="org-list.html">查看更多机构 ></a>#}
+    {#                    </div>#}
+    {#                    <div class="right">#}
+    {#                        <ul>#}
+    {#                        {% for org in all_org %}#}
+    {#                            <li class="{% if forloop.counter|divisibleby:5 %}five{% endif %}">#}
+    {#                                <a href="{% url 'org:org_home' org.id %}">#}
+    {#                                    <div class="company">#}
+    {#                                        <img width="184" height="100" src="{{ MEDIA_URL }}{{ org.image }}"/>#}
+    {#                                        <div class="score">#}
+    {#                                            <div class="circle">#}
+    {#                                                <h2>全国知名</h2>#}
+    {#                                            </div>#}
+    {#                                        </div>#}
+    {#                                    </div>#}
+    {#                                    <p><span class="key" title="慕课网">{{ org.name }}</span></p>#}
+    {#                                </a>#}
+    {#                            </li>#}
+    {#                        {% endfor %}#}
+    {##}
+    {#                        </ul>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </section>#}
 {% endblock %}

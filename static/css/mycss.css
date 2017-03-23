@@ -1,0 +1,30 @@
+.mynav li {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.mybread {
+    margin-top: 50px;
+    background-color: white;
+}
+
+.item {
+    background: #333;
+    text-align: center;
+    /*height: 500px;*/
+}
+
+#myCarousel {
+    margin-top: 60px;
+    /*width: 970px;*/
+}
+
+.myfeature {
+    border: 1px solid #ccc;
+    height: 125px;
+}
+
+.myfooter {
+    height: 500px;
+    background-color: #00a0dc;
+}
