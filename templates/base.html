@@ -7,10 +7,10 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <title>{% block title %}首页 - 线上点餐网{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/mycss.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mycss.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
@@ -57,7 +57,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            你好，{{ request.user.username }} <span class="caret"></span>
+                            你好，{{ request.user.username }} <img src="{{ MEDIA_URL }}{{ request.user.image }}" width="20px" height="
+20px"> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-left">
                             <li><a href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-user"></span>
@@ -89,12 +90,12 @@
 <div class="container">
 
     <!--面包屑-->
-    <ol class="breadcrumb">
-        {% block custom_bread %}
-            <li><a href="#">首页</a></li>
+    {% block custom_bread %}
+        <ol class="breadcrumb">
+            <li><a href="{% url 'index' %}">首页</a></li>
             <li class="active">首页</li>
-        {% endblock %}
     </ol>
+    {% endblock %}
 
 
 
@@ -137,7 +138,7 @@
             </div>
             <br/>
             <div class="text-center">
-                <h6>This Website Is Powered By Lemon, Design By Lemon</h6>
+                <h6>This Website Is Powered By <a href="#">Lemon</a>, Design By <a href="#">Lemon</a></h6>
                 <h6>Copyright © 2017 Lemon All Rights Reserved.</h6>
             </div>
         </div>

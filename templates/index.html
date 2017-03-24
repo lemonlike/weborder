@@ -83,7 +83,7 @@
                     <div class="thumbnail">
                         <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}" alt="菜品图片"></a>
                         <div class="caption">
-                            <a href="{% url 'food:food_detail' food.id %}">
+                            <a style="text-decoration: none" href="{% url 'food:food_detail' food.id %}">
                                 <h3>{{ food.name }}</h3>
                             </a>
                              <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
