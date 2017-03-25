@@ -4,79 +4,86 @@
 {% block title %}购物车 - 在线点餐网{% endblock %}
 
 {% block custom_bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
-                <li><a href="index.html">首页</a>></li>
-                <li>购物车</li>
-            </ul>
-        </div>
-    </section>
+    <ol class="breadcrumb" style="background-color: white;">
+        <li><a href="{% url 'index' %}">首页</a></li>
+        <li class="active">购物车</li>
+    </ol>
 {% endblock %}
 
 {% block content %}
-    <div class="wp butler_list_box list">
-    <div class="butler_list company list">
-    <div class="layout">
-        {% for shop_cart in shop_carts %}
-        <dl class="des difdes">
-            <dt>
-                <a href="{% url 'food:food_detail' shop_cart.food.id %}">
-                    <img width="200" height="120" class="scrollLoading" data-url="{{ MEDIA_URL }}{{ shop_cart.food.image }}"/>
-                </a>
-            </dt>
-            <dd>
-                <div class="clearfix">
-                    <a href="{% url 'food:food_detail' shop_cart.food.id %}">
-                        <h1>{{ shop_cart.food.name }}</h1>
-                    </a>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                {% for shop_cart in shop_carts %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-3">
+                                <a href="{% url 'food:food_detail' shop_cart.food.id %}">
+                                    <img width="200" height="120" src="{{ MEDIA_URL }}{{ shop_cart.food.image }}"/>
+                                </a>
+                            </div>
+                            <div class="col-md-7">
+                                <a href="{% url 'food:food_detail' shop_cart.food.id %}">
+                                    <span style="font-size: 25px">{{ shop_cart.food.name }}</span>
+                                </a>
+                                <p>
+                                    单价：<span>{{ shop_cart.augment_price }}元</span>
+                                </p>
+                                <p>
+                                    数量：<span>{{ shop_cart.quantity }}</span>
+                                </p>
+                                <p>
+                                    类别：<span>{{ shop_cart.food.get_category_display }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-lg">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endfor %}
+            </div>
+
+            <form action="{% url 'food:confirm_order' %}" method="post" autocomplete="off">
+                <div class="col-md-9">
+                    预订时间：
+                    <input type="text" id="preset_time" name="preset_time" value="" readonly="readonly"/>
+
+                    预定包间：
+                    <select name="room_num">
+                        {% for room in rooms %}
+                            <option value="{{ room.name }}">{{ room.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <ul class="cont">
-                    <li class="first"><p class="pic9">类别：<span>{{ shop_cart.food.get_category_display }}</span></p>
-                        </li>
-                    <li class="first"><p class="pic9">数量：<span>{{ shop_cart.quantity }}</span></p>
-                        </li>
-                </ul>
-            </dd>
-            <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>{{ shop_cart.augment_price }}<br/>元</div>
-        </dl>
-        {% endfor %}
-    <form action="{% url 'food:confirm_order' %}" method="post" autocomplete="off">
-        <div>
-        预订时间：
-        <input type="text" id="preset_time" name="preset_time" value="" readonly="readonly"/>
-    </div>
-    <div>
-        预定包间：
-        <select name="room_num">
-            {% for room in rooms %}
-            <option value="{{ room.name }}">{{ room.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-    <div>
-        应付金额：{{ total_price }}元
-        <input type="hidden" name="total_price" value="{{ total_price }}">
-    </div>
-    <input type="submit" value="确认支付">
-    {% csrf_token %}
-    </form>
+            <div class="col-md-3 text-right">
+                 <div>
+                     <strong>应付金额：</strong><span style="font-size: 30px; color: #FF9900">{{ total_price }}元</span>
+                    <input type="hidden" name="total_price" value="{{ total_price }}">
+                </div>
+                <br/><br/>
+                <input type="submit" class="btn btn-success btn-lg" value="确认支付">
+            </div>
+
+                {% csrf_token %}
+            </form>
+        </div>
 
 
     </div>
-    </div>
-    </div>
+<br/><br/><br/>
     <script type="text/javascript">
-$(function(){
-laydate({
-        elem: '#preset_time',
-        format: 'YYYY-MM-DD hh:mm',
-        min: laydate.now(),
-        max: laydate.now(+7),
-        istime: true,
-        festival: true
+        $(function () {
+            laydate({
+                elem: '#preset_time',
+                format: 'YYYY-MM-DD hh:mm',
+                min: laydate.now(),
+                max: laydate.now(+7),
+                istime: true,
+                festival: true
 
-    });
-});
-</script>
+            });
+        });
+    </script>
 {% endblock %}

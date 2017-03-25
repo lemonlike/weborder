@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block custom_bread %}
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" style="background-color: white;">
         <li><a href="{% url 'index' %}">首页</a></li>
         <li><a href="{% url 'food:food_list' %}">菜单列表</a></li>
         <li class="active">菜品详情</li>
@@ -23,7 +23,7 @@
                 <div class="col-md-6">
                     <img width="440" height="445"
                          src="{{ MEDIA_URL }}{{ food.image }}"
-                         class="jqzoom"/>
+                         />
                 </div>
                 <div class="col-md-6">
                     <div style="margin-left: 20px">
@@ -72,123 +72,88 @@
                         <h3>本菜详情</h3>
                     </div>
                     <div style="padding: 10px; border: 1px solid #EAEAEA">
-                    {% autoescape off %}
-                        {{ food.detail }}
-                    {% endautoescape %}
-                </div>
-
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-12">
-                <!--发布评论-->
-                        <div class="" id="js-pl-input-fake">
-                                        <textarea id="js-pl-textarea" style="width: 500px; height: 100px"
-                                                  placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
-                        </div>
-                        <input type="button" id="js-pl-submit" class="btn" data-cid="452" value="发表评论" style="background-color: #00C850; color: white">
-                        <p class="global-errortip js-global-error"></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="row">
-
-        </div>
-    </div>
-    </div>
-
-    <section>
-        <div class="wp">
-            <div class="list groupPurchase_detail_pro">
-                <div class="left layout">
-                    <div class="head">
-                        <ul class="tab_header">
-                            <li class="active">本菜详情</li>
-                        </ul>
-                    </div>
-                    <div class="tab_cont tab_cont1">
                         {% autoescape off %}
                             {{ food.detail }}
                         {% endautoescape %}
                     </div>
-                    <div class="tab_cont">
-                        <div class="comment">
-                            <div class="comenlist">
 
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <!--发布评论-->
+                    <div class="" id="js-pl-input-fake">
+                                        <textarea id="js-pl-textarea" style="width: 500px; height: 100px; padding: 10px"
+                                                  placeholder="对这道菜满意吗？在这留下你的评论吧……想说啥就说啥！"></textarea>
+                    </div>
+                    <input type="button" id="js-pl-submit" class="btn" data-cid="452" value="发表评论"
+                           style="background-color: #00C850; color: white">
+                    <p class="global-errortip js-global-error"></p>
+                </div>
+            </div>
+            <br/>
+
+            {% for user_comments in food_comments %}
+                <div class="row" style="border-bottom: 1px solid #EAEAEA">
+                    <div class="col-md-12">
+                        <div>
+                            <div class="col-md-1">
+                                <img src='{{ MEDIA_URL }}{{ user_comments.user.image }}'
+                                     width='40' height='40'/>
+                            </div>
+                            <div class="col-md-11">
+                                <p style="color: limegreen">
+                                    <strong>{{ user_comments.user.username }}</strong>
+                                </p>
+                                <p style="font-size: larger;">
+                                    {{ user_comments.comments }}
+                                </p>
+                                <p style="color: darkgrey">
+                                    <small>时间：{{ user_comments.add_time }}</small>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <br/>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12" style="background-color: #F8F8F8">
+                    <h4>相关菜品推荐</h4>
+                </div>
+            </div>
+
+            <div class="row">
+
+                {% for relate_food in relate_foods %}
+                    <div class="col-md-12">
+                        <div class="thumbnail">
+                            <a href="{% url 'food:food_detail' relate_food.id %}">
+                                <img src="{{ MEDIA_URL }}{{ relate_food.image }}"/>
+                            </a>
+                            <div class="caption">
+                                <a style="text-decoration: none" href="{% url 'food:food_detail' relate_food.id %}">
+                                    <h3>{{ relate_food.name }}</h3></a>
+                                <p>
+                                    <span class="fl">价格：<i class="key">{{ relate_food.price }}<i
+                                            style="font-size: 14px">元</i></i></span>
+                                </p>
+                                <br/>
 
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="wp">
-                    <!--发布评论-->
-                    <div id="js-pub-container" class="issques clearfix js-form">
-                        <div class="wgt-ipt-wrap pub-editor-wrap " id="js-pl-input-fake">
-                                        <textarea id="js-pl-textarea" class=""
-                                                  placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
-                        </div>
-                        <input type="button" id="js-pl-submit" class="pub-btn" data-cid="452" value="发表评论">
-                        <p class="global-errortip js-global-error"></p>
-                    </div>
-                    <div id="course_note">
-                        <ul class="mod-post" id="comment-list">
-                            {% for user_comments in food_comments %}
-                                <li class="post-row">
-                                    <div class="media">
-                                        <span target="_blank"><img src='{{ MEDIA_URL }}{{ user_comments.user.image }}'
-                                                                   width='40' height='40'/></span>
-                                    </div>
-                                    <div class="bd">
-                                        <div class="tit">
-                                            <span target="_blank">{{ user_comments.user.username }}</span>
-                                        </div>
-                                        <p class="cnt">
-                                            {{ user_comments.comments }}
-                                        </p>
-                                        <div class="footer clearfix">
-                                                        <span title="创建时间"
-                                                              class="l timeago">时间：{{ user_comments.add_time }}</span>
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endfor %}
-
-
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="right layout">
-                    <div class="head">相关菜品推荐</div>
-                    <div class="group_recommend">
-                        {% for relate_food in relate_foods %}
-
-                            <dl>
-                                <dt>
-                                    <a target="_blank" href="{% url 'food:food_detail' relate_food.id %}">
-                                        <img width="240" height="220" class="scrollLoading"
-                                             src="{{ MEDIA_URL }}{{ relate_food.image }}"/>
-                                    </a>
-                                </dt>
-                                <dd>
-                                    <a target="_blank" href="{% url 'food:food_detail' relate_food.id %}">
-                                        <h2>{{ relate_food.name }}</h2></a>
-                                    <span class="fl">价格：<i class="key">{{ relate_food.price }}</i></span>
-                                </dd>
-                            </dl>
-                        {% endfor %}
-
-
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
+    </div>
 
-
-    </section>
 
     {% block custom_js %}
         <script type="text/javascript">
