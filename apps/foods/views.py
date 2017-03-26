@@ -163,7 +163,7 @@ class AddShopCartView(LoginRequiredMixin, View):
         return HttpResponseRedirect(reverse("index"))
 
 
-class ShopCartView(View):
+class ShopCartView(LoginRequiredMixin, View):
     """
     购物车详情页
     """
@@ -263,7 +263,7 @@ class CompletePayView(View):
             return HttpResponseRedirect(reverse("index"))
 
 
-class MyOrderView(View):
+class MyOrderView(LoginRequiredMixin, View):
     """
     我的订单
     """

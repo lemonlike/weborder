@@ -2,112 +2,175 @@
 <html>
 {% load staticfiles %}
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<title>{% block title %}个人信息- 在线点餐网{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>{% block title %}个人信息- 在线点餐网{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/plugins/queryCity/css/cityLayout.css' %}">
 
     <link rel="stylesheet" type="text/css" href="{% static 'css/lq.datetimepick.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mycss.css' %}">
     {% block custom_css %}{% endblock %}
 
 
     <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/jquery-migrate-1.2.1.min.js' %}" type="text/javascript"></script>
 
+
 </head>
 <body>
-<section class="headerwrap headerwrap2">
-    <header>
-		<div  class="header2 header">
- 			<div class="top">
-				<div class="wp">
-					<div class="fl"><p>服务电话：<b>62331111</b></p></div>
-					<!--登录后跳转-->
-
-
-                         {% if request.user.is_authenticated %}
-                        <div class="personal">
-                            <dl class="user fr">
-                                <dd>{{ request.user.username }}<img class="down fr" src="/static/images/top_down.png"/>
-                                </dd>
-                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
-                            </dl>
-                            <div class="userdetail">
-                                <dl>
-                                    <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
-                                    </dt>
-                                    <dd>
-                                        <h2>{{ request.user.nick_name }}</h2>
-                                        <p>{{ request.user.username }}</p>
-                                    </dd>
-                                </dl>
-                                <div class="btn">
-                                    <a class="personcenter fl" href="{% url 'users:user_info' %}">进入个人中心</a>
-                                    <a class="fr" href="{% url 'logout' %}">退出</a>
-                                </div>
-                            </div>
-                        </div>
-                    {% else %}
-                        <a style="color:white" class="fr registerbtn" href={% url 'register' %}>注册</a>
-                        <a style="color:white" class="fr loginbtn" href={% url 'login' %}>登录</a>
-                    {% endif %}
-                        <a href="">
-                            <div class="msg-num"><span id="MsgNum">{{ request.user.unread_nums }}</span></div>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" data-target="#navbar" data-toggle="collapse" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'index' %}">在线点餐网</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav mynav">
+                    <li {% if request.path == '/' %}class="active"{% endif %}>
+                        <a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span> 首页 </a></li>
+                    <li {% if request.path|slice:'10' == '/food/list' %}class="active"{% endif %}>
+                        <a href="{% url 'food:food_list' %}"><span class="glyphicon glyphicon-book"></span> 全部菜单
+                            <img src="{% static 'images/nav_hot.png' %}">
                         </a>
+                    </li>
+                    <li {% if request.path|slice:'10' == '/food/shop' %}class="active"{% endif %}>
+                        <a href="{% url 'food:shop_cart' %}"><span class="glyphicon glyphicon-shopping-cart"></span> 购物车
+                        </a>
+                    </li>
+                    <li {% if request.path|slice:'8' == '/food/my' %}class="active"{% endif %}>
+                        <a href="{% url 'food:my_order' %}"><span class="glyphicon glyphicon-th-list"></span> 我的订单 </a>
+                    </li>
+                </ul>
+
+                <!--登录后跳转-->
+                {% if request.user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                你好，{{ request.user.username }} <img src="{{ MEDIA_URL }}{{ request.user.image }}" width="20px" height="20px"> <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li><a href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-user"></span>
+                                    个人中心 </a></li>
+                                <li class="divider"></li>
+                                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> 退出
+                                </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href={% url 'login' %}><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                        <li><a href={% url 'register' %}><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                    </ul>
+                {% endif %}
 
 
-				</div>
-			</div>
 
-    <div class="middle">
-        <div class="wp">
-            <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo2.png' %}"/></a>
-            <h1>我的在线点餐网</h1>
+                <form role="search" class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="搜索你想吃的菜">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
         </div>
-    </div>
-			</div>
-    </header>
-</section>
+    </nav>
 
 
-
-<!--crumbs start-->
+<div class="container">
+<!--面包屑-->
 {% block bread %}
 
 {% endblock %}
-<section>
-	<div class="wp list personal_list">
-	<div class="left">
-        <ul>
-            <li {% if request.path|slice:'8' == '/users/i' %}class="active2"{% endif %}><a href="{% url 'users:user_info' %}">个人资料</a></li>
-            <li {% if request.path|slice:'8' == '/users/u' %}class="active2"{% endif %}><a href="{% url 'users:user_food' %}">点过的菜</a></li>
-            <li {% if request.path|slice:'8' == '/users/f' %}class="active2"{% endif %}><a href="{% url 'users:fav_food' %}">我的收藏</a></li>
-            <li {% if request.path|slice:'8' == '/users/m' %}class="active2"{% endif %}><a href="{% url 'users:my_message' %}">我的消息</a></li>
-        </ul>
-	</div>
 
-    {% block right_content %}
+    <div class="row" style="min-height: 600px;">
+        <div class="col-md-3">
 
-    {% endblock %}
+            <div class="col-md-8">
+            <ul class="nav nav-pills nav-stacked">
+                <li {% if request.path|slice:'8' == '/users/i' %}class="active"{% endif %} style="margin-top: 30px"><a
+                        href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;个人资料 </a></li>
+                <li {% if request.path|slice:'8' == '/users/u' %}class="active"{% endif %} style="margin-top: 30px"><a
+                        href="{% url 'users:user_food' %}"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;点过的菜</a></li>
+                <li {% if request.path|slice:'8' == '/users/f' %}class="active"{% endif %} style="margin-top: 30px"><a
+                        href="{% url 'users:fav_food' %}"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;&nbsp;我的收藏</a></li>
+                <li {% if request.path|slice:'8' == '/users/m' %}class="active"{% endif %} style="margin-top: 30px"><a
+                        href="{% url 'users:my_message' %}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;我的消息</a></li>
+            </ul>
+        </div>
 
-	</div>
-</section>
+        </div>
 
+        <div class="col-md-9">
 
-<!--sidebar start-->
+        {% block right_content %}
+
+        {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- 底部 -->
+<div class="myfooter">
+    <div class="container-fluid">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>联系我们</h2>
+                    <br/>
+                    <h4>Tel: 6233-1111
+                        <small>（周一至周日 8:00-22:00）</small>
+                    </h4>
+                    <h4>Email: lemonyolo@sina.com</h4>
+                </div>
+
+                <div class="col-md-4">
+                    <h2>本站链接</h2>
+                    <br/>
+                    <h5><a href="">首页</a></h5>
+                    <h5><a href="">全部菜单</a></h5>
+                    <h5><a href="">购物车</a></h5>
+                    <h5><a href="">我的订单</a></h5>
+                    <h5><a href="">个人中心</a></h5>
+                </div>
+
+                <div class="col-md-4">
+                    <br/>
+                    <img src="{% static 'images/erweima.jpg' %}" width="180px" height="180px">
+                </div>
+            </div>
+            <br/>
+            <div class="text-center">
+                <h6>This Website Is Powered By <a href="#">Lemon</a>, Design By <a href="#">Lemon</a></h6>
+                <h6>Copyright © 2017 Lemon All Rights Reserved.</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--回到顶部-->
 <section>
     <ul class="sidebar">
-        <li class="qq">
-            <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2023525077&site=qq&menu=yes"></a>
-        </li>
         <li class="totop"></li>
     </ul>
 </section>
-<!--sidebar end-->
+
+
 <!--header start-->
 
 <div class="dialog" id="jsDialog">
@@ -119,6 +182,7 @@
             <p></p>
         </div>
     </div>
+
     <!--提示弹出框-->
     <div class="bidtips dialogbox promptbox" id="jsComfirmDialig">
         <h1>确认提交</h1>
@@ -133,27 +197,30 @@
             </dd>
         </div>
     </div>
+
+{# 修改密码弹出框 #}
     <div class="resetpwdbox dialogbox" id="jsResetDialog">
         <h1>修改密码</h1>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="cont">
             <form id="jsResetPwdForm" autocomplete="off">
                 <div class="box">
-                    <span class="word2" >新&nbsp;&nbsp;密&nbsp;&nbsp;码</span>
+                    <span class="word2">新&nbsp;&nbsp;密&nbsp;&nbsp;码</span>
                     <input type="password" id="pwd" name="password1" placeholder="6-20位非中文字符"/>
                 </div>
                 <div class="box">
-                    <span class="word2" >确定密码</span>
+                    <span class="word2">确定密码</span>
                     <input type="password" id="repwd" name="password2" placeholder="6-20位非中文字符"/>
                 </div>
                 <div class="error btns" id="jsResetPwdTips"></div>
                 <div class="button">
-                    <input id="jsResetPwdBtn" type="button" value="提交" />
+                    <input id="jsResetPwdBtn" type="button" value="提交"/>
                 </div>
                 {% csrf_token %}
             </form>
         </div>
     </div>
+
     <div class="dialogbox changeemai1 changephone" id="jsChangeEmailDialog">
         <h1>修改邮箱</h1>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
@@ -166,7 +233,7 @@
                 <input class="fl email_code" type="text" id="jsChangeEmailCode" name="code" placeholder="输入邮箱验证码">
                 <input class="getcode getting" type="button" id="jsChangeEmailCodeBtn" value="获取验证码">
             </div>
-            <div class="error btns change_email_tips" id="jsChangeEmailTips" >请输入...</div>
+            <div class="error btns change_email_tips" id="jsChangeEmailTips">请输入...</div>
             <div class="button">
                 <input class="changeemai_btn" id="jsChangeEmailBtn" type="button" value="完成"/>
             </div>
@@ -174,7 +241,7 @@
         </form>
     </div>
 
-    <div  class="noactivebox dialogbox" id="jsUnactiveForm" >
+    <div class="noactivebox dialogbox" id="jsUnactiveForm">
         <h1>邮件验证提示</h1>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="center">
@@ -183,7 +250,8 @@
             <p class="a"><a class="btn" id="jsGoToEmail" target="_blank" href="http://mail.qq.com">去邮箱验证</a></p>
             <p class="zy_success upmove"></p>
             <p style="display: none;" class="sendE2">没收到，您可以查看您的垃圾邮件和被过滤邮件，也可以再次发送验证邮件（<span class="c5c">60s</span>）</p>
-            <p class="sendE">没收到，您可以查看您的垃圾邮件和被过滤邮件，<br/>也可以<span class="c5c green" id="jsSenEmailAgin" style="cursor: pointer;">再次发送验证邮件</span></p>
+            <p class="sendE">没收到，您可以查看您的垃圾邮件和被过滤邮件，<br/>也可以<span class="c5c green" id="jsSenEmailAgin"
+                                                                 style="cursor: pointer;">再次发送验证邮件</span></p>
         </div>
     </div>
     <div class="resetpassbox dialogbox" id="jsSetNewPwd">
@@ -205,8 +273,8 @@
             </div>
             <div class="error btns" id="jsSetNewPwdTips"></div>
             <div class="button">
-                <input type="hidden" name="mobile" id="jsInpResetMobil" />
-                <input id="jsSetNewPwdBtn" type="button" value="提交" />
+                <input type="hidden" name="mobile" id="jsInpResetMobil"/>
+                <input id="jsSetNewPwdBtn" type="button" value="提交"/>
             </div>
         </form>
     </div>
@@ -216,17 +284,22 @@
         <div class="cont">
             <form id="jsFindPwdForm" autocomplete="off">
                 <div class="box">
-                    <span class="word2" >账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span>
+                    <span class="word2">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</span>
                     <input type="text" id="account" name="account" placeholder="手机/邮箱"/>
                 </div>
                 <div class="box">
                     <span class="word3">验证码</span>
-                    <input autocomplete="off" class="form-control-captcha find-password-captcha" id="find-password-captcha_1" name="captcha_f_1" placeholder="请输入验证码" type="text" /> <input class="form-control-captcha find-password-captcha" id="find-password-captcha_0" name="captcha_f_0" placeholder="请输入验证码" type="hidden" value="5f3c00e47fb1be12d2fd15b9a860711597721b3f" /> &nbsp;<img src="/captcha/image/5f3c00e47fb1be12d2fd15b9a860711597721b3f/" alt="captcha" class="captcha" />
+                    <input autocomplete="off" class="form-control-captcha find-password-captcha"
+                           id="find-password-captcha_1" name="captcha_f_1" placeholder="请输入验证码" type="text"/> <input
+                        class="form-control-captcha find-password-captcha" id="find-password-captcha_0"
+                        name="captcha_f_0" placeholder="请输入验证码" type="hidden"
+                        value="5f3c00e47fb1be12d2fd15b9a860711597721b3f"/> &nbsp;<img
+                        src="/captcha/image/5f3c00e47fb1be12d2fd15b9a860711597721b3f/" alt="captcha" class="captcha"/>
                 </div>
                 <div class="error btns" id="jsForgetTips"></div><!--忘记密码错误-->
                 <div class="button">
                     <input type="hidden" name="sms_type" value="1">
-                    <input id="jsFindPwdBtn" type="button" value="提交" />
+                    <input id="jsFindPwdBtn" type="button" value="提交"/>
                 </div>
             </form>
         </div>
@@ -235,102 +308,109 @@
 <div class="bg" id="dialogBg"></div>
 
 
+
+<script src="{% static 'jquery/jquery-3.1.1.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+
 <script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
 <script type="text/javascript" src={% static 'js/plugins/laydate/laydate.js' %}></script>
 <script src="{% static 'js/plugins/layer/layer.js' %}"></script>
 <script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}"  type="text/javascript"></script>
-<script src="{% static 'js/validateDialog.js' %}"  type="text/javascript"></script>
-<script src="{% static 'js/deco-common.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/validateDialog.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}" type="text/javascript"></script>
 
 <script src="{% static 'js/plugins/jquery.upload.js' %}" type='text/javascript'></script>
 <script src="{% static 'js/validate.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/deco-user.js' %}" ></script>
+
+
+
+<script src="{% static 'js/deco-user.js' %}"></script>
 {% block custom_js %}{% endblock %}
 <script type="text/javascript">
-    $('.jsDeleteFav_course').on('click', function(){
+    $('.jsDeleteFav_course').on('click', function () {
         var _this = $(this),
             fav_food_id = _this.attr('data-fav_food_id');
         $.ajax({
-                cache: false,
-                type: "POST",
-                url: "{% url "food:add_fav" %}",
-                data: {
-                    user_id: {{ request.user.id }},
-                    food_id: fav_food_id,
-                    csrfmiddlewaretoken: '{{ csrf_token }}'
-                },
-                async: true,
-                success: function(data) {
-                    Dml.fun.winReload();
-                }
-            });
+            cache: false,
+            type: "POST",
+            url: "{% url "food:add_fav" %}",
+            data: {
+                user_id: {{ request.user.id }},
+                food_id: fav_food_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            async: true,
+            success: function (data) {
+                Dml.fun.winReload();
+            }
+        });
     });
 
 </script>
 
 
 <script>
-        var shareUrl = '',
-            shareText = '',
-            shareDesc = '',
-            shareComment = '';
-        $(function () {
-            $(".bdsharebuttonbox a").mouseover(function () {
-                var type = $(this).attr('data-cmd'),
-                    $parent = $(this).parent('.bdsharebuttonbox'),
-                    fxurl = $parent.attr('data-url'),
-                    fxtext = $parent.attr('data-text'),
-                    fxdesc = $parent.attr('data-desc'),
-                    fxcomment = $parent.attr('data-comment');
-                switch (type){
-                    case 'tsina':
-                    case 'tqq':
-                    case 'renren':
-                            shareUrl = fxurl;
-                            shareText = fxdesc;
-                            shareDesc = '';
-                            shareComment = '';
-                        break;
-                    default :
-                            shareUrl = fxurl;
-                            shareText = fxtext;
-                            shareDesc = fxdesc;
-                            shareComment = fxcomment;
-                        break;
-                }
-            });
+    var shareUrl = '',
+        shareText = '',
+        shareDesc = '',
+        shareComment = '';
+    $(function () {
+        $(".bdsharebuttonbox a").mouseover(function () {
+            var type = $(this).attr('data-cmd'),
+                $parent = $(this).parent('.bdsharebuttonbox'),
+                fxurl = $parent.attr('data-url'),
+                fxtext = $parent.attr('data-text'),
+                fxdesc = $parent.attr('data-desc'),
+                fxcomment = $parent.attr('data-comment');
+            switch (type) {
+                case 'tsina':
+                case 'tqq':
+                case 'renren':
+                    shareUrl = fxurl;
+                    shareText = fxdesc;
+                    shareDesc = '';
+                    shareComment = '';
+                    break;
+                default :
+                    shareUrl = fxurl;
+                    shareText = fxtext;
+                    shareDesc = fxdesc;
+                    shareComment = fxcomment;
+                    break;
+            }
         });
-        function SetShareUrl(cmd, config) {
-            if (shareUrl) {
-                config.bdUrl = "" + shareUrl;
-            }
-            if(shareText){
-                config.bdText = shareText;
-            }
-            if(shareDesc){
-                config.bdDesc = shareDesc;
-            }
-            if(shareComment){
-                config.bdComment = shareComment;
-            }
-
-            return config;
+    });
+    function SetShareUrl(cmd, config) {
+        if (shareUrl) {
+            config.bdUrl = "" + shareUrl;
         }
-        window._bd_share_config = {
-            "common": {
-                "onBeforeClick":SetShareUrl,
-                "bdPic":"",
-                "bdMini":"2",
-                "searchPic":"1",
-                "bdMiniList":false
-            },
-            "share": {
-                "bdSize":"16"
-            }
-        };
-    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com../api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        if (shareText) {
+            config.bdText = shareText;
+        }
+        if (shareDesc) {
+            config.bdDesc = shareDesc;
+        }
+        if (shareComment) {
+            config.bdComment = shareComment;
+        }
+
+        return config;
+    }
+    window._bd_share_config = {
+        "common": {
+            "onBeforeClick": SetShareUrl,
+            "bdPic": "",
+            "bdMini": "2",
+            "searchPic": "1",
+            "bdMiniList": false
+        },
+        "share": {
+            "bdSize": "16"
+        }
+    };
+    with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com../api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
 </script>
 </body>
 </html>

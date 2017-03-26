@@ -4,8 +4,6 @@
 {% block title %}菜品详情 - 在线点餐网{% endblock %}
 
 {% block custom_css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/common-less.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/muke/course/course-comment.css' %}"/>
 {% endblock %}
 
 {% block custom_bread %}
@@ -92,9 +90,9 @@
                     <p class="global-errortip js-global-error"></p>
                 </div>
             </div>
-            <br/>
+            <br/><br/>
 
-            {% for user_comments in food_comments %}
+                 {% for user_comments in food_comments %}
                 <div class="row" style="border-bottom: 1px solid #EAEAEA">
                     <div class="col-md-12">
                         <div>
@@ -104,7 +102,7 @@
                             </div>
                             <div class="col-md-11">
                                 <p style="color: limegreen">
-                                    <strong>{{ user_comments.user.username }}</strong>
+                                    <strong>{{ user_comments.user.nick_name }}</strong>
                                 </p>
                                 <p style="font-size: larger;">
                                     {{ user_comments.comments }}
@@ -120,16 +118,17 @@
 
                 <br/>
             {% endfor %}
+
+
         </div>
 
         <div class="col-md-3">
-            <div class="row">
-                <div class="col-md-12" style="background-color: #F8F8F8">
-                    <h4>相关菜品推荐</h4>
-                </div>
+        <div class="panel panel-default" style="border-color: white;">
+            <div class="panel-heading">
+                <h4>相关菜品推荐</h4>
             </div>
-
-            <div class="row">
+            <div class="panel-body">
+                <div class="row">
 
                 {% for relate_food in relate_foods %}
                     <div class="col-md-12">
@@ -151,9 +150,12 @@
                     </div>
                 {% endfor %}
             </div>
+            </div>
+        </div>
+
         </div>
     </div>
-
+<br/><br/>
 
     {% block custom_js %}
         <script type="text/javascript">
