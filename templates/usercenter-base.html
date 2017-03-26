@@ -60,7 +60,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                你好，{{ request.user.username }} <img src="{{ MEDIA_URL }}{{ request.user.image }}" width="20px" height="20px"> <span class="caret"></span>
+                                你好，{{ request.user.nick_name }} <img src="{{ MEDIA_URL }}{{ request.user.image }}" width="20px" height="20px"> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-left">
                                 <li><a href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-user"></span>
@@ -99,19 +99,21 @@
 
     <div class="row" style="min-height: 600px;">
         <div class="col-md-3">
-
-            <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-8">
             <ul class="nav nav-pills nav-stacked">
-                <li {% if request.path|slice:'8' == '/users/i' %}class="active"{% endif %} style="margin-top: 30px"><a
-                        href="{% url 'users:user_info' %}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;个人资料 </a></li>
-                <li {% if request.path|slice:'8' == '/users/u' %}class="active"{% endif %} style="margin-top: 30px"><a
-                        href="{% url 'users:user_food' %}"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;点过的菜</a></li>
-                <li {% if request.path|slice:'8' == '/users/f' %}class="active"{% endif %} style="margin-top: 30px"><a
-                        href="{% url 'users:fav_food' %}"><span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;&nbsp;我的收藏</a></li>
-                <li {% if request.path|slice:'8' == '/users/m' %}class="active"{% endif %} style="margin-top: 30px"><a
-                        href="{% url 'users:my_message' %}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;我的消息</a></li>
+                <li {% if request.path|slice:'8' == '/users/i' %}class="active"{% endif %} style="margin-top: 30px; font-size: large"><a
+                        href="{% url 'users:user_info' %}">&nbsp;&nbsp;<span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;个人资料 </a></li>
+                <li {% if request.path|slice:'8' == '/users/u' %}class="active"{% endif %} style="margin-top: 30px; font-size: large"><a
+                        href="{% url 'users:user_food' %}">&nbsp;&nbsp;<span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;点过的菜</a></li>
+                <li {% if request.path|slice:'8' == '/users/f' %}class="active"{% endif %} style="margin-top: 30px; font-size: large"><a
+                        href="{% url 'users:fav_food' %}">&nbsp;&nbsp;<span class="glyphicon glyphicon-heart"></span>&nbsp;&nbsp;&nbsp;我的收藏</a></li>
+                <li {% if request.path|slice:'8' == '/users/m' %}class="active"{% endif %} style="margin-top: 30px; font-size: large"><a
+                        href="{% url 'users:my_message' %}">&nbsp;&nbsp;<span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;我的消息</a></li>
             </ul>
         </div>
+            </div>
+
 
         </div>
 
@@ -200,7 +202,7 @@
 
 {# 修改密码弹出框 #}
     <div class="resetpwdbox dialogbox" id="jsResetDialog">
-        <h1>修改密码</h1>
+        <h2>修改密码</h2>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="cont">
             <form id="jsResetPwdForm" autocomplete="off">
@@ -222,7 +224,7 @@
     </div>
 
     <div class="dialogbox changeemai1 changephone" id="jsChangeEmailDialog">
-        <h1>修改邮箱</h1>
+        <h2>修改邮箱</h2>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <p>请输入新的邮箱地址</p>
         <form id="jsChangeEmailForm" autocomplete="off">
@@ -242,7 +244,7 @@
     </div>
 
     <div class="noactivebox dialogbox" id="jsUnactiveForm">
-        <h1>邮件验证提示</h1>
+        <h2>邮件验证提示</h2>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="center">
             <img src="{% static 'images/send.png' %}"/>
@@ -255,7 +257,7 @@
         </div>
     </div>
     <div class="resetpassbox dialogbox" id="jsSetNewPwd">
-        <h1>重新设置密码</h1>
+        <h2>重新设置密码</h2>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <p class="green">请输入新密码</p>
         <form id="jsSetNewPwdForm">
@@ -279,7 +281,7 @@
         </form>
     </div>
     <div class="forgetbox dialogbox">
-        <h1>忘记密码</h1>
+        <h2>忘记密码</h2>
         <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <div class="cont">
             <form id="jsFindPwdForm" autocomplete="off">

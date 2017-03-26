@@ -4,47 +4,47 @@
 {% block title %}我的收藏- 在线点餐网{% endblock %}
 
 {% block bread %}
-    <section>
-        <div class="wp">
-            <ul class="crumbs">
-                <li><a href="{% url 'index' %}">首页</a>></li>
-                <li>我的收藏</li>
-            </ul>
-        </div>
-    </section>
+    <ol class="breadcrumb" style="background-color: white;">
+        <li><a href="{% url 'index' %}">首页</a></li>
+        <li class="active">我的收藏</li>
+    </ol>
 {% endblock %}
 
 {% block right_content %}
-    <div class="right">
-        <div class="personal_des Releasecont">
-            <div class="head">
-                <h1>我的收藏</h1>
-            </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>我的收藏</h4>
         </div>
-        <div class="personal_des permessage">
-            <div class="companycenter">
-                <div class="group_list brief">
-                    {% for fav_food in fav_foods %}
-                        <div class="module1_5 box">
-                            <a href="{% url 'food:food_detail' fav_food.food_id %}">
-                                <img width="214" height="190"
-                                     src="{{ MEDIA_URL }}{{ fav_food.food.image }}"/>
-                            </a>
-                            <div class="des">
-                                <a href="{% url 'food:food_detail' fav_food.food_id %}"><h2>{{ fav_food.food.name }}</h2></a>
+        <div class="panel-body">
+            <div class="row">
+                {% for fav_food in fav_foods %}
+                    <div class="col-md-3">
+                        <div class="thumbnail">
+                            <a href="{% url 'food:food_detail' fav_food.food_id %}"><img
+                                    src="{{ MEDIA_URL }}{{ fav_food.food.image }}"
+                                    alt="菜品图片"></a>
+                            <div class="caption">
+                                <a style="text-decoration: none" href="{% url 'food:food_detail' fav_food.food_id %}">
+                                    <h3>{{ fav_food.food.name }}</h3>
+                                </a>
                                 <span class="fl">价格：<i class="key">{{ fav_food.food.price }}元</i></span>
-                                <span class="fr">下单数：{{ fav_food.food.buy_nums }}</span>
-                            </div>
-                            <div class="bottom">
-                                <span class="fl">{{ fav_food.food.get_category_display }}</span>
-                                <span class="delete-group fr jsDeleteFav_course" data-fav_food_id="{{ fav_food.food_id }}"></span>
+                                <span class="fr">收藏数：{{ fav_food.food.fav_nums }}</span>
+                                <br/>
+                                <div style="margin-bottom: 10px">
+                                    <span class="fl" title="">{{ fav_food.food.get_category_display }}</span>
+
+                                <p class="fr jsDeleteFav_course"
+                                      data-fav_food_id="{{ fav_food.food_id }}">删除：<a><span class="glyphicon glyphicon-trash"></span></a></p>
+                                </div>
+
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 
