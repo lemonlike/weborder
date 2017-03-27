@@ -1,7 +1,6 @@
 body{
     width:100%;
     height:100%;
-    background:#77c562;
 }
 a:hover{
     text-decoration:underline;
@@ -15,7 +14,7 @@ a:hover{
     background:#fff;
 }
 .bg-box{
-    background:url(../images/login-bg.png) no-repeat center center;
+    background:url(../images/bgimage.jpg) no-repeat center center;
 }
 .header-box{
     width:1190px;
@@ -144,8 +143,7 @@ a:hover{
 }
 
 .form-box{
-    position:relative;
-    width:290px;
+    width:360px;
     height: 472px;
     padding:0 40px;
     background:#fff;
