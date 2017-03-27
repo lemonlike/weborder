@@ -36,4 +36,8 @@
 
 }
 
+.myerrorput {
+    border-bottom: 2px solid;
+    border-bottom-color: red;
+}
 

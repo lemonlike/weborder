@@ -81,7 +81,6 @@ class ActiveUserView(View):
         return HttpResponseRedirect(reverse("login"))
 
 
-
 class LoginView(View):
     """
     用户登录
