@@ -40,4 +40,18 @@
     border-bottom: 2px solid;
     border-bottom-color: red;
 }
+/*.mycaptcha img {*/
+    /*display: inline;*/
+/*}*/
+.mycaptcha input {
+    width: auto;
+    /*display: inline;*/
+}
+
+.myinputerrorput input {
+    border-bottom: 2px solid;
+    border-bottom-color: red;
+}
+
+
 

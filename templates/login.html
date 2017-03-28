@@ -26,6 +26,7 @@
     </style>
 </head>
 <body>
+<!-- 导航栏 -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -50,28 +51,31 @@
 </nav>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+    <div class="row" style="min-height: 600px; margin-top: 30px">
+    <div class="col-md-8">
+        <img src="{% static 'images/loginimage.jpg' %}">
+    </div>
+        <div class="col-md-4">
             <h2>登录</h2>
             <form action="{% url 'login' %}" method="post" autocomplete="off">
-                <div style="font-size: large">
-                    <input class="{% if login_form.errors.username or msg %}myerrorput{% endif %} " name="username"
+                <div style="font-size: large; margin-top: 30px">
+                    <input class="{% if login_form.errors.username or msg %}myerrorput{% endif %}" name="username"
                            id="account_l" type="text" value="{{ login_form.username.value }}" placeholder="请输入你的用户名或邮箱"/>
                 </div>
                 <div class="text-center" style="font-size: smaller; color: red">
                     {{ login_form.errors.username }}</div>
-                <div style="font-size: large">
 
+                <div style="font-size: large; margin-top: 40px">
                     <input class="{% if login_form.errors.password or msg %}myerrorput{% endif %}" name="password"
                            id="password_l" type="password" value="{{ login_form.password.value }}" placeholder="请输入你的密码"/>
                 </div>
                 <div class="text-center" style="font-size: smaller; color: red">
                     {{ login_form.errors.password }}{{ msg }}</div>
 
-                <input class="btn btn-success" id="jsLoginBtn" type="submit" value="立即登录 > "/>
+                <button class="btn btn-success" style="margin-top: 40px" id="jsLoginBtn" type="submit" >立即登录 > </button>
                 {% csrf_token %}
             </form>
-            <p class="">没有在线点餐网帐号？<a href="register.html">[立即注册]</a>  <a class="" href="{% url 'forget_pwd' %}">忘记密码？</a></p>
+            <div class="text-left"style="margin-top: 20px">没有在线点餐网帐号？<a href="{% url 'register' %}">[立即注册]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'forget_pwd' %}">忘记密码？</a></div>
         </div>
     </div>
 </div>
