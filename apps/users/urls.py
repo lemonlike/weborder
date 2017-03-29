@@ -4,7 +4,7 @@ __author__ = 'lemon'
 from django.conf.urls import url
 
 from .views import UserInfoView, ImageUploadView, UpdatePwdView, SendEmailCodeView, UpdateEmailView
-from .views import MyFavFoodView, MyMessageView, UserFoodView, BootStrapView
+from .views import MyFavFoodView, MyMessageView, UserFoodView
 
 urlpatterns = [
     # 用户基本信息
@@ -31,5 +31,4 @@ urlpatterns = [
     # 点过的菜
     url(r'^user_food/$', UserFoodView.as_view(), name="user_food"),
 
-    url(r'^bootstrap/$', BootStrapView.as_view(), name="bootstrap"),
 ]

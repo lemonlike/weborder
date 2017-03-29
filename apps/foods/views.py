@@ -185,6 +185,17 @@ class ShopCartView(LoginRequiredMixin, View):
         })
 
 
+class ShopCartDeleteView(View):
+    """
+    购物车删除
+    """
+    def get(self, request, delete_id):
+        delete_food = ShopCart.objects.filter(user=request.user, food_id=delete_id)
+        if delete_food:
+            delete_food.delete()
+            return HttpResponseRedirect(reverse("index"))
+
+
 class ConfirmOrder(View):
     """
     确认订单
@@ -268,7 +279,7 @@ class MyOrderView(LoginRequiredMixin, View):
     我的订单
     """
     def get(self, request):
-        my_orders = Order.objects.filter(user=request.user)
+        my_orders = Order.objects.filter(user=request.user).order_by("-order_time")
         return render(request, "shopping-order.html", {
             "my_orders": my_orders,
         })

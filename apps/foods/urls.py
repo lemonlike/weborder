@@ -4,7 +4,7 @@ __author__ = 'lemon'
 from django.conf.urls import url
 
 from .views import FoodListView, FoodDetailView, AddFavView, AddCommentsView, AddShopCartView, ShopCartView
-from .views import ConfirmOrder, CompletePayView, MyOrderView, MyOrderDetail
+from .views import ConfirmOrder, CompletePayView, MyOrderView, MyOrderDetail, ShopCartDeleteView
 
 
 urlpatterns = [
@@ -25,6 +25,9 @@ urlpatterns = [
 
     # 购物车页面
     url(r'^shop_cart/$', ShopCartView.as_view(), name="shop_cart"),
+
+    # 购物车删除
+    url(r'^shop_delete/(?P<delete_id>\d+)/$', ShopCartDeleteView.as_view(), name="shop_delete"),
 
     # 确认订单
     url(r'^confirm_order/$', ConfirmOrder.as_view(), name="confirm_order"),

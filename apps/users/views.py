@@ -309,8 +309,3 @@ class UserFoodView(LoginRequiredMixin, View):
         user_foods = UserFood.objects.filter(user=request.user)
         return render(request, "usercenter-userfood.html", {"user_foods": user_foods})
 
-
-class BootStrapView(View):
-    def get(self, request):
-        return render(request, "BootStrapDemo.html")
-
