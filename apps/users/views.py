@@ -122,7 +122,7 @@ class IndexView(View):
     """
     def get(self, request):
         all_banners = Banner.objects.all().order_by("index")
-        foods = Food.objects.all().order_by("-fav_nums")[:6]
+        foods = Food.objects.all().order_by("-fav_nums")[:8]
         banner_foods = Food.objects.all().order_by("-buy_nums")[:3]
 
         return render(request, "index.html", {

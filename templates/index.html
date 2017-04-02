@@ -79,21 +79,28 @@
         <h1>今日推荐</h1>
         <div class="row">
             {% for food in foods %}
-                <div class="col-sm-6 col-md-3">
+                <div class="col-md-3">
                     <div class="thumbnail">
                         <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}" alt="菜品图片"></a>
                         <div class="caption">
-                            <a style="text-decoration: none" href="{% url 'food:food_detail' food.id %}">
-                                <h3>{{ food.name }}</h3>
-                            </a>
-                             <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
-                                <span class="fr">下单数：{{ food.buy_nums }}</span>
-                            <br/>
-                            <p>
-                                 <span class="fl" title="">{{ food.get_category_display }}</span>
-                                <span class="fr">收藏数：{{ food.fav_nums }}</span>
-                            </p>
-                        </div>
+                                <p style="margin-left: 10px">
+                                    <a style="text-decoration: none;" href="{% url 'food:food_detail' food.id %}">
+                                        <i style="font-size: 20px">{{ food.name }}</i>
+                                    </a>
+                                </p>
+
+                                <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 35px">
+                                    <span style="float: left"><i style="color: grey">已售{{ food.buy_nums }}份</i></span>
+                                    <span style="float: right"><img src="{% static 'img/fav.png' %}"><i
+                                            style="color: #ffa735">({{ food.fav_nums }})</i></span>
+                                </p>
+
+                                <p style="margin-bottom: 50px; margin-left: 10px; margin-right: 10px">
+                                    <span style="float: left"><i style="font-size: 18px; color: red; font-weight: bold">￥{{ food.price }}</i></span>
+                                    <span style="float: right" title=""><i style="color: orange;">{{ food.get_category_display }}</i></span>
+
+                                </p>
+                            </div>
                     </div>
                 </div>
             {% endfor %}

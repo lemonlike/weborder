@@ -36,28 +36,35 @@
                 </li>
             </ul>
             <br/>
-        <div class="row">
-            {% for food in all_foods.object_list %}
-                <div class="col-md-4">
-                    <div class="thumbnail">
-                        <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}"
-                                                                            alt="菜品图片"></a>
-                        <div class="caption">
-                            <a style="text-decoration: none" href="{% url 'food:food_detail' food.id %}">
-                                <h3>{{ food.name }}</h3>
-                            </a>
-                            <span class="fl">价格：<i class="key">{{ food.price }}元</i></span>
-                            <span class="fr">下单数：{{ food.buy_nums }}</span>
-                            <br/>
-                            <p>
-                                <span class="fl" title="">{{ food.get_category_display }}</span>
-                                <span class="fr">收藏数：{{ food.fav_nums }}</span>
-                            </p>
+            <div class="row">
+                {% for food in all_foods.object_list %}
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}"
+                                                                                alt="菜品图片"></a>
+                            <div class="caption">
+                                <p style="margin-left: 10px">
+                                    <a style="text-decoration: none;" href="{% url 'food:food_detail' food.id %}">
+                                        <i style="font-size: 20px">{{ food.name }}</i>
+                                    </a>
+                                </p>
+
+                                <p style="margin-left: 10px; margin-right: 10px; margin-bottom: 35px">
+                                    <span style="float: left"><i style="color: grey">已售{{ food.buy_nums }}份</i></span>
+                                    <span style="float: right"><img src="{% static 'img/fav.png' %}"><i
+                                            style="color: #ffa735">({{ food.fav_nums }})</i></span>
+                                </p>
+
+                                <p style="margin-bottom: 50px; margin-left: 10px; margin-right: 10px">
+                                    <span style="float: left"><i style="font-size: 18px; color: red; font-weight: bold">￥{{ food.price }}</i></span>
+                                    <span style="float: right" title=""><i style="color: orange;">{{ food.get_category_display }}</i></span>
+
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
 
             <div class="pageturn">
                 <ul class="pagelist">
@@ -88,60 +95,62 @@
             </div>
         </div>
 
-{#        <div class="col-md-3" style="margin-top: -15px">#}
-{#            <h3>热门菜品推荐</h3>#}
-{#        <div class="row">#}
-{#            {% for hot_food in hot_foods %}#}
-{#                <div class="col-md-12">#}
-{#                    <div class="thumbnail">#}
-{#                        <a href="{% url 'food:food_detail' hot_food.id %}">#}
-{#                            <img src="{{ MEDIA_URL }}{{ hot_food.image }}"/>#}
-{#                        </a>#}
-{#                        <div class="caption">#}
-{#                            <a style="text-decoration: none" href="{% url 'food:food_detail' hot_food.id %}">#}
-{#                                <h3>{{ hot_food.name }}</h3></a>#}
-{#                            <p>#}
-{#                                <span class="fl">价格：<i class="key">{{ hot_food.price }}<i style="font-size: 14px">元</i></i></span>#}
-{#                            </p>#}
-{#                            <br/>#}
-{##}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{##}
-{#        </div>#}
+        {#        <div class="col-md-3" style="margin-top: -15px">#}
+        {#            <h3>热门菜品推荐</h3>#}
+        {#        <div class="row">#}
+        {#            {% for hot_food in hot_foods %}#}
+        {#                <div class="col-md-12">#}
+        {#                    <div class="thumbnail">#}
+        {#                        <a href="{% url 'food:food_detail' hot_food.id %}">#}
+        {#                            <img src="{{ MEDIA_URL }}{{ hot_food.image }}"/>#}
+        {#                        </a>#}
+        {#                        <div class="caption">#}
+        {#                            <a style="text-decoration: none" href="{% url 'food:food_detail' hot_food.id %}">#}
+        {#                                <h3>{{ hot_food.name }}</h3></a>#}
+        {#                            <p>#}
+        {#                                <span class="fl">价格：<i class="key">{{ hot_food.price }}<i style="font-size: 14px">元</i></i></span>#}
+        {#                            </p>#}
+        {#                            <br/>#}
+        {##}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            {% endfor %}#}
+        {#        </div>#}
+        {##}
+        {#        </div>#}
 
-    <div class="col-md-3">
-        <div class="panel panel-default" style="border-color: white">
-            <div class="panel-heading">
-                <h4>热门菜品推荐</h4>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    {% for hot_food in hot_foods %}
-                <div class="col-md-12">
-                    <div class="thumbnail">
-                        <a href="{% url 'food:food_detail' hot_food.id %}">
-                            <img src="{{ MEDIA_URL }}{{ hot_food.image }}"/>
-                        </a>
-                        <div class="caption">
-                            <a style="text-decoration: none" href="{% url 'food:food_detail' hot_food.id %}">
-                                <h3>{{ hot_food.name }}</h3></a>
-                            <p>
-                                <span class="fl">价格：<i class="key">{{ hot_food.price }}<i style="font-size: 14px">元</i></i></span>
-                            </p>
-                            <br/>
-
-                        </div>
-                    </div>
+        <div class="col-md-3">
+            <div class="panel panel-default" style="border-color: white">
+                <div class="panel-heading">
+                    <h4>热门菜品推荐</h4>
                 </div>
-            {% endfor %}
+                <div class="panel-body">
+                    <div class="row">
+                        {% for hot_food in hot_foods %}
+                            <div class="col-md-12">
+                                <div class="thumbnail">
+                                    <a href="{% url 'food:food_detail' hot_food.id %}">
+                                        <img src="{{ MEDIA_URL }}{{ hot_food.image }}"/>
+                                    </a>
+                                    <div class="caption">
+                                        <a style="text-decoration: none"
+                                           href="{% url 'food:food_detail' hot_food.id %}">
+                                            <h3>{{ hot_food.name }}</h3></a>
+                                        <p>
+                                            <span class="fl">价格：<i class="key">{{ hot_food.price }}<i
+                                                    style="font-size: 14px">元</i></i></span>
+                                        </p>
+                                        <br/>
+
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
 {% endblock %}
