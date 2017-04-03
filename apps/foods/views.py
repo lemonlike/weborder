@@ -38,7 +38,7 @@ class FoodListView(View):
         except PageNotAnInteger:
             page = 1
 
-        p = Paginator(all_foods, 6, request=request)
+        p = Paginator(all_foods, 9, request=request)
         foods = p.page(page)
         return render(request, "food-list.html", {
             "all_foods": foods,

@@ -15,11 +15,11 @@ class Food(models.Model):
     price = models.IntegerField(verbose_name=u"价格", default=0)
     category = models.CharField(verbose_name=u"菜的类别", max_length=5,
                                 choices=(("rh", u"热荤"), ("rs", u"热素"), ("lc", u"凉菜"),
-                                         ("td", u"甜点"), ("zs", u"主食"), ("js", u"酒水")), default="rh")
+                                         ("td", u"甜点"), ("zs", u"主食"), ("js", u"饮品")), default="rh")
     image = models.ImageField(verbose_name=u"图片", upload_to="food/%Y/%m", max_length=100, null=True, blank=True)
     taste = models.CharField(verbose_name=u"口味", max_length=20)
     detail = UEditorField(verbose_name=u"详细描述", width=600, height=300, imagePath="foods/ueditor/",
-                          filePath="foods/ueditor/", default='')
+                          filePath="foods/ueditor/", null=True, blank=True)
     buy_nums = models.IntegerField(verbose_name=u"下单数", default=0)
     fav_nums = models.IntegerField(verbose_name=u"收藏数", default=0)
     add_time = models.DateTimeField(verbose_name=u"添加时间", default=datetime.now)
