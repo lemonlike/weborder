@@ -9,7 +9,7 @@
 {% block custom_bread %}
     <ol class="breadcrumb" style="background-color: white;">
         <li><a href="{% url 'index' %}">首页</a></li>
-        <li><a href="{% url 'food:food_list' %}">菜单列表</a></li>
+        <li><a href="{% url 'food:food_list' %}">全部菜单</a></li>
         <li class="active">菜品详情</li>
     </ol>
 {% endblock %}
@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div style="background-color: #F8F8F8; height: 65px; padding: 10px; border-left: 1px solid #EAEAEA; border-top: 1px solid #EAEAEA; border-right: 1px solid #EAEAEA;">
-                        <h3>本菜详情</h3>
+                        <h3>详细介绍</h3>
                     </div>
                     <div style="padding: 10px; border: 1px solid #EAEAEA">
                         {% autoescape off %}

@@ -21,7 +21,7 @@ import xadmin
 from django.views.static import serve
 
 from users.views import LoginView, IndexView, RegisterView, ActiveUserView, ForgetPwdView, ResetPwdView, ModifyPwdView
-from users.views import LogoutView
+from users.views import LogoutView, TestPayView
 from .settings import MEDIA_ROOT
 
 urlpatterns = [
@@ -66,4 +66,6 @@ urlpatterns = [
 
     # 用户个人中心相关url配置
     url(r'^users/', include('users.urls', namespace="users")),
+
+    url(r'^testpay/$', TestPayView.as_view(), name="testpay"),
 ]
