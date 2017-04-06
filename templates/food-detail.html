@@ -21,36 +21,63 @@
                 <div class="col-md-6">
                     <img width="440" height="445"
                          src="{{ MEDIA_URL }}{{ food.image }}"
-                         />
+                    />
                 </div>
                 <div class="col-md-6">
                     <div style="margin-left: 20px">
-                        <h1>{{ food.name }}</h1>
-                        <div style="height: 65px; background-color: #F8F8F8; padding: 10px">
-                            <span>价格：<i style="color: #fa8341; font-size: 30px">{{ food.price }}<i
-                                    style="font-size: 16px">元</i></i></span>
-                            <span style="margin-left: 30px">下单数：{{ food.buy_nums }}</span>
-                        </div>
+                        <p><span style="font-size: 40px">{{ food.name }}</span></p>
+                        <p style="height: 80px; background-color: #F8F8F8; padding: 10px">
+                            <span>价格：<i style="color: red; font-size: 50px">{{ food.price }}<i
+                                    style="font-size: 16px"> 元</i></i></span>
+                            <span style="margin-left: 50px; color: grey">已售{{ food.buy_nums }}份</span>
+                        </p>
                         <ul>
                             <li style="margin-top: 20px"><span
-                                    class="">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
+                                    class="">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span
+                                    style="font-size: 30px">{{ food.taste }}</span>
                             </li>
                             <li style="margin-top: 20px"><span
-                                    class="">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
-                            </li>
-                            <li style="margin-top: 20px"><span
-                                    class="">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span>{{ food.taste }}</span>
+                                    class="">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span
+                                    style="font-size: 30px">{{ food.get_category_display }}</span>
                             </li>
 
-                            <li style="margin-top: 20px"><span class="">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span
-                                    title="">{{ food.get_category_display }}</span>
-                            </li>
-                            <li style="margin-top: 20px"><span class="">下单用户：</span>
-                                <span class=""><img width="40" height="40"
-                                                    src=""/></span>
-                            </li>
                         </ul>
-                        <div style="margin-top: 40px">
+
+                        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more">分享到：</a><a href="#"
+                                                                                                              class="bds_qzone"
+                                                                                                              data-cmd="qzone"
+                                                                                                              title="分享到QQ空间">QQ空间</a><a
+                                href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ好友</a><a href="#"
+                                                                                                   class="bds_weixin"
+                                                                                                   data-cmd="weixin"
+                                                                                                   title="分享到微信">微信</a><a
+                                href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">新浪微博</a><a href="#"
+                                                                                                       class="bds_renren"
+                                                                                                       data-cmd="renren"
+                                                                                                       title="分享到人人网">人人网</a><a
+                                href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网">豆瓣网</a><a href="#"
+                                                                                                       class="bds_tqq"
+                                                                                                       data-cmd="tqq"
+                                                                                                       title="分享到腾讯微博">腾讯微博</a><a
+                                href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook">Facebook</a><a href="#"
+                                                                                                               class="bds_twi"
+                                                                                                               data-cmd="twi"
+                                                                                                               title="分享到Twitter">Twitter</a>
+                        </div>
+                        <script>window._bd_share_config = {
+                            "common": {
+                                "bdSnsKey": {},
+                                "bdText": "",
+                                "bdMini": "2",
+                                "bdMiniList": false,
+                                "bdPic": "",
+                                "bdStyle": "0",
+                                "bdSize": "16"
+                            }, "share": {"bdSize": 16}
+                        };
+                        with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+                        <br/><br/><br/>
+                        <p style="margin-top: 40px">
                             <button type="button" class="btn btn-warning btn-lg" id="jsLeftBtn">
                                 {% if has_fav_food %}已收藏{% else %}收藏{% endif %}
                             </button>
@@ -58,7 +85,7 @@
                                     style="color: white; text-decoration: none"
                                     href="{% url 'food:cart_add' food.id %}">加入购物车</a>
                             </button>
-                        </div>
+                        </p>
                     </div>
 
                 </div>
@@ -92,7 +119,7 @@
             </div>
             <br/><br/>
 
-                 {% for user_comments in food_comments %}
+            {% for user_comments in food_comments %}
                 <div class="row" style="border-bottom: 1px solid #EAEAEA">
                     <div class="col-md-12">
                         <div>
@@ -123,39 +150,40 @@
         </div>
 
         <div class="col-md-3">
-        <div class="panel panel-default" style="border-color: white;">
-            <div class="panel-heading">
-                <h4>相关菜品推荐</h4>
-            </div>
-            <div class="panel-body">
-                <div class="row">
+            <div class="panel panel-default" style="border-color: white;">
+                <div class="panel-heading">
+                    <h4>相关菜品推荐</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
 
-                {% for relate_food in relate_foods %}
-                    <div class="col-md-12">
-                        <div class="thumbnail">
-                            <a href="{% url 'food:food_detail' relate_food.id %}">
-                                <img src="{{ MEDIA_URL }}{{ relate_food.image }}"/>
-                            </a>
-                            <div class="caption">
-                                <a style="text-decoration: none" href="{% url 'food:food_detail' relate_food.id %}">
-                                    <h3>{{ relate_food.name }}</h3></a>
-                                <p>
+                        {% for relate_food in relate_foods %}
+                            <div class="col-md-12">
+                                <div class="thumbnail">
+                                    <a href="{% url 'food:food_detail' relate_food.id %}">
+                                        <img src="{{ MEDIA_URL }}{{ relate_food.image }}"/>
+                                    </a>
+                                    <div class="caption">
+                                        <a style="text-decoration: none"
+                                           href="{% url 'food:food_detail' relate_food.id %}">
+                                            <h3>{{ relate_food.name }}</h3></a>
+                                        <p>
                                     <span class="fl">价格：<i class="key">{{ relate_food.price }}<i
                                             style="font-size: 14px">元</i></i></span>
-                                </p>
-                                <br/>
+                                        </p>
+                                        <br/>
 
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                </div>
             </div>
-            </div>
-        </div>
 
         </div>
     </div>
-<br/><br/>
+    <br/><br/>
 
     {% block custom_js %}
         <script type="text/javascript">

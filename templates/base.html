@@ -46,7 +46,8 @@
                     </a>
                 </li>
                 <li {% if request.path|slice:'10' == '/food/shop' %}class="active"{% endif %}>
-                    <a href="{% url 'food:shop_cart' %}"><span class="glyphicon glyphicon-shopping-cart"></span> 购物车 </a>
+                    <a href="{% url 'food:shop_cart' %}"><span class="glyphicon glyphicon-shopping-cart"></span> 购物车
+                    </a>
                 </li>
                 <li {% if request.path|slice:'8' == '/food/my' %}class="active"{% endif %}>
                     <a href="{% url 'food:my_order' %}"><span class="glyphicon glyphicon-th-list"></span> 我的订单 </a></li>
@@ -57,7 +58,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            你好，{{ request.user.nick_name }} <img src="{{ MEDIA_URL }}{{ request.user.image }}" width="20px" height="
+                            你好，{{ request.user.nick_name }} <img src="{{ MEDIA_URL }}{{ request.user.image }}"
+                                                                 width="20px" height="
 20px"> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-left">
@@ -95,7 +97,7 @@
         <ol class="breadcrumb" style="background-color: white;">
             <li><a href="{% url 'index' %}">首页</a></li>
             <li class="active">首页</li>
-    </ol>
+        </ol>
     {% endblock %}
 
 
@@ -164,7 +166,6 @@
 <script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/plugins/jquery.scrollLoading.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/deco-common.js' %}" type="text/javascript"></script>
-
 
 </body>
 </html>
