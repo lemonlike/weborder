@@ -45,6 +45,7 @@
                 <li><a href="{% url 'index' %}"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
                 <li><a href={% url 'login' %}><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
                 <li><a href={% url 'register' %}><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                <li><a href="http://127.0.0.1:8000/xadmin/"><span class="glyphicon glyphicon-share-alt">后台</span></a></li>
             </ul>
 
         </div>
@@ -70,11 +71,11 @@
                 <div class="col-md-4">
                     <h2>本站链接</h2>
                     <br/>
-                    <h5><a href="">首页</a></h5>
-                    <h5><a href="">全部菜单</a></h5>
-                    <h5><a href="">购物车</a></h5>
-                    <h5><a href="">我的订单</a></h5>
-                    <h5><a href="">个人中心</a></h5>
+                    <h5><a href="{% url 'index' %}">首页</a></h5>
+                    <h5><a href="{% url 'food:food_list' %}">全部菜单</a></h5>
+                    <h5><a href="{% url 'food:shop_cart' %}">购物车</a></h5>
+                    <h5><a href="{% url 'food:my_order' %}">我的订单</a></h5>
+                    <h5><a href="{% url 'users:user_info' %}">个人中心</a></h5>
                 </div>
 
                 <div class="col-md-4">

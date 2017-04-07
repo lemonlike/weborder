@@ -25,28 +25,30 @@
                 </div>
                 <div class="col-md-6">
                     <div style="margin-left: 20px">
-                        <p><span style="font-size: 40px">{{ food.name }}</span></p>
-                        <p style="height: 80px; background-color: #F8F8F8; padding: 10px">
+                        <p><span style="font-size: 40px">{{ food.name }}</span><span style="margin-left: 20px"><img src="{% static 'img/fav.png' %}"><i
+                                            style="color: #ffa735">({{ food.fav_nums }})</i></span></p>
+                        <p style="height: 85px; background-color: #F8F8F8; padding: 10px">
                             <span>价格：<i style="color: red; font-size: 50px">{{ food.price }}<i
                                     style="font-size: 16px"> 元</i></i></span>
                             <span style="margin-left: 50px; color: grey">已售{{ food.buy_nums }}份</span>
                         </p>
                         <ul>
-                            <li style="margin-top: 20px"><span
+                            <li style="margin-top: 26px"><span
                                     class="">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味：</span><span
                                     style="font-size: 30px">{{ food.taste }}</span>
                             </li>
-                            <li style="margin-top: 20px"><span
+                            <li style="margin-top: 26px"><span
                                     class="">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><span
                                     style="font-size: 30px">{{ food.get_category_display }}</span>
                             </li>
 
                         </ul>
 
-                        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more">分享到：</a><a href="#"
-                                                                                                              class="bds_qzone"
-                                                                                                              data-cmd="qzone"
-                                                                                                              title="分享到QQ空间">QQ空间</a><a
+                        <div class="bdsharebuttonbox">
+                            <a href="#" class="bds_more" data-cmd="more">分享到：</a><a href="#"
+                                                                                    class="bds_qzone"
+                                                                                    data-cmd="qzone"
+                                                                                    title="分享到QQ空间">QQ空间</a><a
                                 href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ好友</a><a href="#"
                                                                                                    class="bds_weixin"
                                                                                                    data-cmd="weixin"
@@ -67,7 +69,7 @@
                         <script>window._bd_share_config = {
                             "common": {
                                 "bdSnsKey": {},
-                                "bdText": "",
+                                "bdText": "欢迎访问我的网站~",
                                 "bdMini": "2",
                                 "bdMiniList": false,
                                 "bdPic": "",
@@ -78,10 +80,11 @@
                         with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
                         <br/><br/><br/>
                         <p style="margin-top: 40px">
-                            <button type="button" class="btn btn-warning btn-lg" id="jsLeftBtn">
+                            <button type="button" style="height: 46px; width: 124px; font-size: 18px"
+                                    class="btn btn-warning" id="jsLeftBtn">
                                 {% if has_fav_food %}已收藏{% else %}收藏{% endif %}
                             </button>
-                            <button style="margin-left: 50px" type="button" class="btn btn-warning btn-lg"><a
+                            <button style="margin-left: 65px" type="button" class="btn btn-warning btn-lg"><a
                                     style="color: white; text-decoration: none"
                                     href="{% url 'food:cart_add' food.id %}">加入购物车</a>
                             </button>
