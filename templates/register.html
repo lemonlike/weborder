@@ -32,7 +32,7 @@
             <div class="text-center" style="font-size: smaller; color: red">
                     {{ register_form.errors.captcha }}</div>
 
-                <input class="btn btn-success" style="margin-top: 20px;" id="jsEmailRegBtn" type="submit" value="注册并登录"/>
+                <input class="btn btn-success {% if register_form.errors or msg %}{% else %}myRegister{% endif %}" style="margin-top: 20px;" id="jsEmailRegBtn" type="submit" value="注册并登录"/>
                 {% csrf_token %}
             </form>
                     <div class="text-left" style="margin-top: 20px">已有账号？<a href="{% url 'login' %}">[立即登录]</a></div>
@@ -45,4 +45,9 @@
 
 {% block custom_js %}
 <script src="{% static 'js/validateDialog.js' %}" type="text/javascript"></script>
+{#    <script type="text/javascript">#}
+{#    $('.myRegister').on('click', function () {#}
+{#        alert("激活链接已发送至你的邮箱，请前往邮箱完成账户激活。");#}
+{#    });#}
+{#    </script>#}
 {% endblock %}

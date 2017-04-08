@@ -7,6 +7,7 @@ from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 from .models import Food, ShopCart, Room, Order, OrderDetail
 from operation.models import UserFavorite, FoodComments, UserFood
@@ -55,7 +56,7 @@ class FoodDetailView(View):
         # 相关菜品推荐（按照类别推荐 并按收藏数排序去前两个）
         category = food.category
         if category:
-            relate_foods = Food.objects.filter(category=category).order_by("-fav_nums")[:2]
+            relate_foods = Food.objects.filter(Q(category=category), ~Q(id=int(food_id))).order_by("-fav_nums")[:2]
         else:
             relate_foods = []
 
@@ -160,7 +161,7 @@ class AddShopCartView(LoginRequiredMixin, View):
             shop_cart.user = request.user
             shop_cart.food_id = food_id
             shop_cart.save()
-        return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse('food:food_detail', kwargs={'food_id': int(food_id)}))
 
 
 class ShopCartView(LoginRequiredMixin, View):
@@ -193,7 +194,7 @@ class ShopCartDeleteView(View):
         delete_food = ShopCart.objects.filter(user=request.user, food_id=delete_id)
         if delete_food:
             delete_food.delete()
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("food:shop_cart"))
 
 
 class ConfirmOrder(View):

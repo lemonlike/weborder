@@ -146,7 +146,8 @@ class ForgetPwdView(View):
             email = request.POST.get("email", '')
             if UserProfile.objects.filter(email=email):
                 send_email(email, "forget")
-                return render(request, "send_success.html")
+                # return render(request, "send_success.html")
+                return HttpResponseRedirect(reverse("login"))
             else:
                 return render(request, "forgetpwd.html", {"forget_form": forget_form, "msg": u"该用户不存在"})
         else:

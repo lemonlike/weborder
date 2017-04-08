@@ -27,7 +27,7 @@
                                     <span style="font-size: 25px">{{ shop_cart.food.name }}</span>
                                 </a>
                                 <p>
-                                    单价：<span>{{ shop_cart.augment_price }}元</span>
+                                    小计：<span>{{ shop_cart.augment_price }}元</span>
                                 </p>
                                 <p>
                                     数量：<span>{{ shop_cart.quantity }}</span>
@@ -37,7 +37,7 @@
                                 </p>
                             </div>
                             <div class="col-md-2">
-                                <a href="{% url 'food:shop_delete' shop_cart.food.id %}" class="btn btn-danger btn-lg">删除</a>
+                                <a href="{% url 'food:shop_delete' shop_cart.food.id %}" class="btn btn-danger btn-lg" id="cartDelete">删除</a>
                             </div>
                         </div>
                     </div>
@@ -85,5 +85,10 @@
 
             });
         });
+    </script>
+    <script type="text/javascript">
+    $('#cartDelete').on('click', function () {
+        alert("删除成功！");
+    });
     </script>
 {% endblock %}

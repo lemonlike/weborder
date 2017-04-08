@@ -86,7 +86,7 @@
                             </button>
                             <button style="margin-left: 65px" type="button" class="btn btn-warning btn-lg"><a
                                     style="color: white; text-decoration: none"
-                                    href="{% url 'food:cart_add' food.id %}">加入购物车</a>
+                                    href="{% url 'food:cart_add' food.id %}" id="cartSuccess">加入购物车</a>
                             </button>
                         </p>
                     </div>
@@ -255,6 +255,12 @@
                 });
             });
 
+        </script>
+
+        <script type="text/javascript">
+        $('#cartSuccess').on('click', function () {
+            alert("成功加入购物车。");
+        });
         </script>
     {% endblock %}
 
