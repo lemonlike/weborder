@@ -27,7 +27,7 @@
         <div class="carousel-inner">
             {% for banner in all_banners %}
                 <div class="item {% if banner.index == 1 %}active{% endif %}">
-                    <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="Second slide" height="100%" width="100%">
+                    <a href="{{ banner.url }}"><img src="{{ MEDIA_URL }}{{ banner.image }}" alt="Second slide" height="100%" width="100%"></a>
                 </div>
             {% endfor %}
 

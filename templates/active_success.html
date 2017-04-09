@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>激活成功</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.css' %}">
+</head>
+<body>
+<div class="container text-center">
+        <p style="margin-top: 200px; font-size: large">
+        账户激活成功。<a href="{% url 'login' %}">马上登陆</a>
+    </p>
+
+</div>
+</body>
+</html>

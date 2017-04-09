@@ -66,7 +66,7 @@ function search_click(){
     if(keywords == ""){
         return
     }
-    if(type == "course"){
+        if(type == "course"){
         request_url = "/course/list?keywords="+keywords
     }else if(type == "teacher"){
         request_url = "/org/teacher/list?keywords="+keywords

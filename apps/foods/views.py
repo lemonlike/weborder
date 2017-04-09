@@ -33,6 +33,11 @@ class FoodListView(View):
         elif sort == "fav":
             all_foods = all_foods.order_by("-fav_nums")
 
+        # 菜品全局搜索功能
+        search_keywords = request.GET.get('keywords', '')
+        if search_keywords:
+            all_foods = all_foods.filter(name__icontains=search_keywords)
+
         # 对菜单进行分页
         try:
             page = request.GET.get('page', 1)
@@ -148,6 +153,7 @@ class AddShopCartView(LoginRequiredMixin, View):
     """
     加入购物车
     """
+
     def get(self, request, food_id):
         shop_cart = ShopCart()
 
@@ -168,6 +174,7 @@ class ShopCartView(LoginRequiredMixin, View):
     """
     购物车详情页
     """
+
     def get(self, request):
         # 取得购物车记录
         shop_carts = ShopCart.objects.filter(user=request.user)
@@ -190,6 +197,7 @@ class ShopCartDeleteView(View):
     """
     购物车删除
     """
+
     def get(self, request, delete_id):
         delete_food = ShopCart.objects.filter(user=request.user, food_id=delete_id)
         if delete_food:
@@ -201,6 +209,7 @@ class ConfirmOrder(View):
     """
     确认订单
     """
+
     def post(self, request):
         total_money = request.POST.get("total_price", '')
         preset_time = request.POST.get("preset_time", '')
@@ -265,6 +274,7 @@ class CompletePayView(View):
     """
     完成支付
     """
+
     def post(self, request):
         order_id = request.POST.get("order_id", '')
         orders = Order.objects.filter(id=order_id)
@@ -279,6 +289,7 @@ class MyOrderView(LoginRequiredMixin, View):
     """
     我的订单
     """
+
     def get(self, request):
         my_orders = Order.objects.filter(user=request.user).order_by("-order_time")
         return render(request, "shopping-order.html", {
@@ -290,6 +301,7 @@ class MyOrderDetail(View):
     """
     订单详情
     """
+
     def get(self, request, order_id):
         order_details = OrderDetail.objects.filter(order_id=order_id)
         return render(request, "shopping-order-detail.html", {
