@@ -60,20 +60,14 @@ function getCookie(name) {
 
 //顶部搜索栏搜索方法
 function search_click(){
-    var type = $('#jsSelectOption').attr('data-value'),
-        keywords = $('#search_keywords').val(),
+    var keywords = $('#search_keywords').val(),
         request_url = '';
     if(keywords == ""){
-        return
+        return;
     }
-        if(type == "course"){
-        request_url = "/course/list?keywords="+keywords
-    }else if(type == "teacher"){
-        request_url = "/org/teacher/list?keywords="+keywords
-    }else if(type == "org"){
-        request_url = "/org/list?keywords="+keywords
-    }
-    window.location.href = request_url
+    request_url = "/food/list?keywords="+keywords;
+
+    window.location.href = request_url;
 }
 
 //刷新验证码

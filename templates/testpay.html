@@ -25,17 +25,46 @@
 
     </div>
     <div class="text-center" style="margin-top: 20px">
+        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">完成支付</button>
         <form action="{% url 'food:complete_pay' %}" method="post" autocomplete="off">
             <input type="hidden" value="{{ order_id }}" name="order_id" >
-            <input type="submit" class="btn btn-danger" value="完成支付">
+            <!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					提示：
+				</h4>
+			</div>
+			<div class="modal-body">
+				请确认您已完成支付。若未完成支付，请返回支付。
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button type="submit" id="MyPay" class="btn btn-primary" data-dismiss="modal">
+					我已支付
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
             {% csrf_token %}
         </form>
     </div>
 </div>
+<script>
+   $(function () { $('#myModal').modal('hide')});
+</script>
+<script>
+   $(function () { $('#myModal').on('hide.bs.modal', function () {
+      alert('嘿，我听说您喜欢模态框...');})
+   });
+</script>
 
-<div>
-
-
-</div>
 </body>
 </html>
