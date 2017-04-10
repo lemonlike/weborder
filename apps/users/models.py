@@ -19,7 +19,7 @@ class UserProfile(AbstractUser):
     image = models.ImageField(verbose_name=u"头像", max_length=100, upload_to="image/%Y/%m", default="image/default.png")
 
     class Meta:
-        verbose_name = u"用户信息"
+        verbose_name = u"用户"
         verbose_name_plural = verbose_name
 
     def __unicode__(self):

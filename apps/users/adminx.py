@@ -16,18 +16,21 @@ class BaseSetting(object):
 class GlobalSettings(object):
     site_title = "线上点餐后台管理系统"
     site_footer = "线上点餐网"
+    menu_style = "default"
 
 
 class EmailVerifyRecordAdmin(object):
     list_display = ['code', 'email', 'send_type', 'send_time']
     search_fields = ['code', 'email', 'send_type']
     list_filter = ['code', 'email', 'send_type', 'send_time']
+    model_icon = 'fa fa-envelope'
 
 
 class BannerAdmin(object):
     list_display = ['title', 'url', 'index', 'add_time']
     search_fields = ['title', 'image', 'url', 'index']
     list_filter = ['title', 'image', 'url', 'index', 'add_time']
+    model_icon = 'fa fa-picture-o'
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
