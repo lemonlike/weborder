@@ -26,11 +26,11 @@
             <tbody>
             {% for my_order in my_orders %}
                 <tr>
-                    <td><a href="{% url 'food:order_detail' my_order.id %}">{{ my_order.id }}<small>(查看详情)</small></a></td>
+                    <td><a href="{% url 'food:order_detail' my_order.id %}">1000{{ my_order.id }}<small>(查看详情)</small></a></td>
                     <td>{{ my_order.room_num }}</td>
                     <td>{{ my_order.preset_time }}</td>
                     <td>{{ my_order.order_time }}</td>
-                    <td>{{ my_order.total_money }}元</td>
+                    <td style="color: red">¥{{ my_order.total_money }}</td>
                     <td>{% if my_order.has_pay %}
                         <span style="color: forestgreen; font-weight: bold">已支付</span>{% else %}
                         <span style="color: red; font-weight: bold">未支付</span>{% endif %}</td>

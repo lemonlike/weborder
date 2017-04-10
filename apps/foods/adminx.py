@@ -12,6 +12,7 @@ class FoodAdmin(object):
     list_filter = ['name', 'price', 'category', 'taste', 'detail', 'buy_nums', 'fav_nums', 'add_time']
     style_fields = {"detail": "ueditor"}
     model_icon = 'fa fa-book'
+    readonly_fields = ['buy_nums', 'fav_nums']
 
 
 class OrderAdmin(object):

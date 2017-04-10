@@ -33,11 +33,6 @@ class FoodListView(View):
         elif sort == "fav":
             all_foods = all_foods.order_by("-fav_nums")
 
-        # 菜品全局搜索功能
-        search_keywords = request.GET.get('keywords', '')
-        if search_keywords:
-            all_foods = all_foods.filter(name__icontains=search_keywords)
-
         # 对菜单进行分页
         try:
             page = request.GET.get('page', 1)
@@ -51,6 +46,32 @@ class FoodListView(View):
             "hot_foods": hot_foods,
             "category": category,
             "sort": sort,
+        })
+
+    def post(self, request):
+        all_foods = Food.objects.all().order_by("-add_time")
+
+        # 菜品全局搜索功能
+        search_keyword = request.POST.get('keyword', '')
+
+        # 热门菜 按下单数排序
+        hot_foods = Food.objects.all().order_by("-buy_nums")[:3]
+
+        if search_keyword:
+            all_foods = all_foods.filter(name__icontains=search_keyword)
+
+        # 对菜单进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(all_foods, 9, request=request)
+        foods = p.page(page)
+        return render(request, "food-list.html", {
+            "all_foods": foods,
+            "hot_foods": hot_foods,
+
         })
 
 

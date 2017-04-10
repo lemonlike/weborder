@@ -25,9 +25,9 @@
         <tbody>
         {% for order_detail in order_details %}
         <tr>
-        <td>{{ order_detail.order_id }}</td>
-        <td><a href="{% url 'food:food_detail' order_detail.food_id %}">{{ order_detail.food.name }}</a></td>
-        <td>{{ order_detail.food.price }}</td>
+        <td>1000{{ order_detail.order_id }}</td>
+        <td><img style="height: 60px; width: 60px" src="{{ MEDIA_URL }}{{ order_detail.food.image }}"><a href="{% url 'food:food_detail' order_detail.food_id %}">&nbsp;&nbsp;{{ order_detail.food.name }}</a></td>
+        <td style="color: red">¥{{ order_detail.food.price }}</td>
         <td>{{ order_detail.quantity }}</td>
         </tr>
         {% endfor %}

@@ -80,11 +80,12 @@
 
 
 
-            <form role="search" class="navbar-form navbar-right">
+            <form action="{% url 'food:food_list' %}" method="post" autocomplete="off" role="search" class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input id="search_keywords" type="text" class="form-control" placeholder="搜索你想吃的菜">
+                    <input name="keyword" type="text" class="form-control" placeholder="搜索你想吃的菜">
                 </div>
-                <button id="jsSearchBtn" class="btn btn-default">搜索</button>
+                <button type="submit" class="btn btn-default">搜索</button>
+                {% csrf_token %}
             </form>
         </div>
     </div>
