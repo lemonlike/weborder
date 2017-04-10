@@ -18,15 +18,16 @@
       <div class="panel-body">
           <div class="row">
               <div class="col-md-3 text-center">
+                  <iframe id='frameFile' name='frameFile' style='display: none;'></iframe>
                 <form class="" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off" method="post" action="{% url 'users:image_upload' %}" target='frameFile'>
                         <label for="avatarUp">
                             <span id="avatardiv">
-                                <img width="100" height="100" id="avatarShow" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
+                                <img width="100" height="100" class="js-img-show" id="avatarShow" src="{{ MEDIA_URL }}{{ request.user.image }}"/>
                             </span>
                             <br/><br/>
                             <span class="upload-inp-box" >
                                 <span class="btn btn-primary" id="jsAvatarBtn">修改头像</span>
-                                <input type="file" name="image" id="avatarUp"/>
+                                <input type="file" name="image" id="avatarUp" class="js-img-up"/>
                             </span>
                         </label>
                         {% csrf_token %}

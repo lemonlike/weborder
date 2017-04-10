@@ -40,11 +40,11 @@
                 {% for food in all_foods.object_list %}
                     <div class="col-md-4">
                         <div class="thumbnail">
-                            <a href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}"
+                            <a target="_blank" href="{% url 'food:food_detail' food.id %}"><img src="{{ MEDIA_URL }}{{ food.image }}"
                                                                                 alt="菜品图片"></a>
                             <div class="caption">
                                 <p style="margin-left: 10px">
-                                    <a style="text-decoration: none;" href="{% url 'food:food_detail' food.id %}">
+                                    <a target="_blank" style="text-decoration: none;" href="{% url 'food:food_detail' food.id %}">
                                         <i style="font-size: 20px">{{ food.name }}</i>
                                     </a>
                                 </p>

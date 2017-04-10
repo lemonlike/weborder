@@ -27,13 +27,13 @@
                                     <span style="font-size: 25px">{{ shop_cart.food.name }}</span>
                                 </a>
                                 <p>
-                                    小计：<span>{{ shop_cart.augment_price }}元</span>
+                                    类别：<span>{{ shop_cart.food.get_category_display }}</span>
                                 </p>
                                 <p>
                                     数量：<span>{{ shop_cart.quantity }}</span>
                                 </p>
                                 <p>
-                                    类别：<span>{{ shop_cart.food.get_category_display }}</span>
+                                    小计：<span style="color: red">¥{{ shop_cart.augment_price }}</span>
                                 </p>
                             </div>
                             <div class="col-md-2">
@@ -59,7 +59,7 @@
                 </div>
             <div class="col-md-3 text-right">
                  <div>
-                     <strong>应付金额：</strong><span style="font-size: 30px; color: #FF9900">{{ total_price }}元</span>
+                     <strong>应付金额：</strong><span style="font-size: 30px; color: red">¥{{ total_price }}</span>
                     <input type="hidden" name="total_price" value="{{ total_price }}">
                 </div>
                 <br/><br/>
