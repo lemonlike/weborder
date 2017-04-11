@@ -7,6 +7,7 @@ from DjangoUeditor.models import UEditorField
 
 from users.models import UserProfile
 
+
 # Create your models here.
 
 
@@ -39,6 +40,9 @@ class Order(models.Model):
     order_time = models.DateTimeField(verbose_name=u"下单时间", default=datetime.now)
     preset_time = models.CharField(verbose_name=u"预订时间", max_length=20, default="")
     room_num = models.CharField(verbose_name=u"包间号", max_length=20, default="")
+    order_status = models.CharField(verbose_name=u"订单状态", max_length=20,
+                                    choices=(("weixiaofei", u"未消费"), ("yixiaofei", u"已消费"), ("yiquxiao", u"已取消")),
+                                    default="weixiaofei")
 
     class Meta:
         verbose_name = u"订单"
@@ -65,7 +69,7 @@ class OrderDetail(models.Model):
 class Room(models.Model):
     name = models.CharField(verbose_name=u"包间名", max_length=20)
     category = models.CharField(verbose_name=u"种类", max_length=8,
-                                choices=(("big", u"12人间"), ("middle", u"8人间"), ("small", u"6人间")))
+                                choices=(("big", u"12人间"), ("middle", u"8人间"), ("small", u"6人间"), ("dating", u"大厅")))
     has_order = models.BooleanField(verbose_name=u"是否预订", default=False)
     add_time = models.DateTimeField(verbose_name=u"添加时间", default=datetime.now)
 

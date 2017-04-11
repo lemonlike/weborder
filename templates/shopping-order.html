@@ -21,6 +21,7 @@
                 <th>下单时间</th>
                 <th>总金额</th>
                 <th>支付状态</th>
+                <th>订单状态</th>
             </tr>
             </thead>
             <tbody>
@@ -32,8 +33,15 @@
                     <td>{{ my_order.order_time }}</td>
                     <td style="color: red">¥{{ my_order.total_money }}</td>
                     <td>{% if my_order.has_pay %}
-                        <span style="color: forestgreen; font-weight: bold">已支付</span>{% else %}
-                        <span style="color: red; font-weight: bold">未支付</span>{% endif %}</td>
+                        <img src="{% static 'img/pay_succ.png' %}">{% else %}
+                        <img src="{% static 'img/pay_def.png' %}">{% endif %}</td>
+                    <td>{% if my_order.order_status == "yixiaofei" %}
+                        <span style="color: grey; font-weight: bold">{{ my_order.get_order_status_display }}</span>
+                        {% elif my_order.order_status == "weixiaofei" %}
+                        <span style="color: green; font-weight: bold">{{ my_order.get_order_status_display }}</span>
+                        {% else %}
+                        <span style="color: red; font-weight: bold">{{ my_order.get_order_status_display }}</span>
+                    {% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>

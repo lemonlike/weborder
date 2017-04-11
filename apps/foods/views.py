@@ -325,6 +325,22 @@ class MyOrderDetail(View):
 
     def get(self, request, order_id):
         order_details = OrderDetail.objects.filter(order_id=order_id)
+        my_order = Order.objects.get(id=order_id)
+        my_order_status = my_order.order_status
+        my_order_id = my_order.id
         return render(request, "shopping-order-detail.html", {
-            "order_details": order_details
+            "order_details": order_details,
+            "order_status": my_order_status,
+            "my_order_id": my_order_id,
         })
+
+
+class CancelOrderView(View):
+    """
+    取消订单
+    """
+    def get(self, request, order_id):
+        this_order = Order.objects.get(id=order_id)
+        this_order.order_status = "yiquxiao"
+        this_order.save()
+        return HttpResponseRedirect(reverse("food:my_order"))

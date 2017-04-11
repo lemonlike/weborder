@@ -16,11 +16,12 @@ class FoodAdmin(object):
 
 
 class OrderAdmin(object):
-    list_display = ['id', 'user', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
+    list_display = ['id', 'user', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay', 'order_status']
     search_fields = ['id', 'user__username', 'room_num', 'total_money', 'has_pay']
     list_filter = ['id', 'user__username', 'room_num', 'total_money', 'preset_time', 'order_time', 'has_pay']
     refresh_times = [3, 5]
     model_icon = 'fa fa-file'
+    list_editable = ['order_status']
 
 
 class OrderDetailAdmin(object):
