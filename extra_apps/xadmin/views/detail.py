@@ -71,6 +71,7 @@ class ResultField(object):
         self.value = None
 
         self.init()
+        
 
     def init(self):
         self.label = label_for_field(self.field_name, self.obj.__class__,
